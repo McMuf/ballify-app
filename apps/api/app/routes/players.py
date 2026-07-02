@@ -1,4 +1,3 @@
-import unicodedata
 from datetime import datetime
 
 from fastapi import APIRouter, Depends, HTTPException, Query
@@ -9,16 +8,11 @@ from app.db.models import GameLog, Player, Team
 from app.db.session import get_db
 from app.services import nba_data
 from app.services.stats_calc import efficiency, season_high_low, true_shooting_pct
+from app.services.text_utils import fold as _fold
 
 router = APIRouter()
 
 TRACKED_STATS = ["pts", "reb", "ast", "stl", "blk", "tov", "min", "ts_pct", "eff"]
-
-
-def _fold(text: str) -> str:
-    """Strip diacritics + lowercase, so 'jokic' matches 'Jokić'."""
-    normalized = unicodedata.normalize("NFKD", text)
-    return "".join(c for c in normalized if not unicodedata.combining(c)).lower()
 
 
 def _ensure_game_logs(db: Session, player: Player) -> list[GameLog]:
