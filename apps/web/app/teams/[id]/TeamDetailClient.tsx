@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { apiFetch } from "@/lib/api";
 import SentimentGauge from "@/components/SentimentGauge";
-import type { SentimentGaugeData, TeamDetail } from "@/lib/types";
+import type { GameSummary, SentimentGaugeData, TeamDetail } from "@/lib/types";
 
 function StatTile({ label, value }: { label: string; value: string }) {
   return (
@@ -18,6 +18,7 @@ function StatTile({ label, value }: { label: string; value: string }) {
 export default function TeamDetailClient({ teamId }: { teamId: number }) {
   const [team, setTeam] = useState<TeamDetail | null>(null);
   const [sentimentGauge, setSentimentGauge] = useState<SentimentGaugeData | null>(null);
+  const [todaysGame, setTodaysGame] = useState<GameSummary | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -26,6 +27,12 @@ export default function TeamDetailClient({ teamId }: { teamId: number }) {
       .catch(() => setError("Could not load this team."));
     apiFetch<SentimentGaugeData>(`/sentiment/team/${teamId}`)
       .then(setSentimentGauge)
+      .catch(() => {});
+    apiFetch<GameSummary[]>("/games/today")
+      .then((games) => {
+        const match = games.find((g) => g.home_team_id === teamId || g.away_team_id === teamId);
+        setTodaysGame(match ?? null);
+      })
       .catch(() => {});
   }, [teamId]);
 
@@ -60,6 +67,24 @@ export default function TeamDetailClient({ teamId }: { teamId: number }) {
           </p>
         </div>
       </div>
+
+      {todaysGame && (
+        <Link
+          href={`/games/${todaysGame.id}`}
+          className="flex items-center justify-between rounded-lg border border-hairline bg-surface p-4 transition-colors hover:border-accent"
+        >
+          <div>
+            <p className="text-xs uppercase tracking-wide text-ink-muted">
+              {todaysGame.state === "live" ? "Live now" : todaysGame.status_detail}
+            </p>
+            <p className="mt-1 font-medium text-ink">
+              {todaysGame.away_team_abbr} {todaysGame.away_score} @ {todaysGame.home_team_abbr}{" "}
+              {todaysGame.home_score}
+            </p>
+          </div>
+          <span className="text-sm text-accent">View win probability →</span>
+        </Link>
+      )}
 
       {sentimentGauge && <SentimentGauge gauge={sentimentGauge} title="Sentiment" />}
 

@@ -20,6 +20,50 @@ export type InjuryReportRow = {
   updated_at: string;
 };
 
+export type GameSummary = {
+  id: string;
+  date: string;
+  state: "scheduled" | "live" | "final";
+  status_detail: string;
+  period: number;
+  clock: string;
+  home_team_abbr: string;
+  home_team_key: string;
+  home_team_id: number | null;
+  home_score: number;
+  away_team_abbr: string;
+  away_team_key: string;
+  away_team_id: number | null;
+  away_score: number;
+};
+
+export type WinProbPoint = {
+  sequence: number;
+  period: number;
+  clock: string;
+  home_score: number;
+  away_score: number;
+  home_win_pct: number;
+};
+
+export type GameTeamRef = { id?: number; abbreviation: string; name: string };
+
+export type GameDetail = {
+  id: string;
+  state: {
+    state: "scheduled" | "live" | "final";
+    status_detail: string;
+    period: number;
+    clock: string;
+    home_score: number;
+    away_score: number;
+  };
+  home_team: GameTeamRef;
+  away_team: GameTeamRef;
+  timeline: WinProbPoint[];
+  sentiment_home_share: number | null;
+};
+
 export type TeamSummary = {
   id: number;
   abbreviation: string;
