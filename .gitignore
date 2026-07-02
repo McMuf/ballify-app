@@ -1,0 +1,18 @@
+# Python
+apps/api/venv/
+apps/api/__pycache__/
+**/__pycache__/
+*.pyc
+apps/api/.env
+apps/api/*.db
+
+# Node / Next.js
+apps/web/node_modules/
+apps/web/.next/
+apps/web/out/
+apps/web/.env*.local
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
