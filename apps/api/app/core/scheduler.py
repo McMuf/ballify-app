@@ -3,7 +3,7 @@ import logging
 from apscheduler.schedulers.background import BackgroundScheduler
 
 from app.db.session import SessionLocal
-from app.services import injury_service, sentiment, trades_service
+from app.services import alerts_service, injury_service, sentiment, trades_service
 
 logger = logging.getLogger("ballify.scheduler")
 
@@ -16,6 +16,12 @@ def _refresh_sentiment_job() -> None:
         news_count = sentiment.refresh_news_sentiment(db)
         reddit_count = sentiment.refresh_reddit_sentiment(db)
         logger.info("sentiment refresh: %d news, %d reddit snapshots", news_count, reddit_count)
+
+        # runs right after, in the same job, so swing detection always sees
+        # this refresh's data rather than racing a separately-scheduled job
+        big_nights = alerts_service.check_big_stat_nights(db)
+        swings = alerts_service.check_sentiment_swings(db)
+        logger.info("watchlist alerts: %d big-stat-night, %d sentiment-swing", big_nights, swings)
     except Exception:
         logger.exception("sentiment refresh failed")
     finally:

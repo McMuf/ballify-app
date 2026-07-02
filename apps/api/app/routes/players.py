@@ -1,70 +1,16 @@
-from datetime import datetime
-
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from app.db.models import GameLog, Player, Team
+from app.db.models import Player, Team
 from app.db.session import get_db
-from app.services import nba_data
-from app.services.stats_calc import efficiency, season_high_low, true_shooting_pct
+from app.services.game_logs import ensure_game_logs as _ensure_game_logs
+from app.services.stats_calc import season_high_low
 from app.services.text_utils import fold as _fold
 
 router = APIRouter()
 
 TRACKED_STATS = ["pts", "reb", "ast", "stl", "blk", "tov", "min", "ts_pct", "eff"]
-
-
-def _ensure_game_logs(db: Session, player: Player) -> list[GameLog]:
-    season = nba_data.current_season()
-    existing = (
-        db.execute(
-            select(GameLog)
-            .where(GameLog.player_id == player.id)
-            .order_by(GameLog.game_date)
-        )
-        .scalars()
-        .all()
-    )
-    if existing:
-        return existing
-
-    rows = nba_data.fetch_player_game_log(player.id, season)
-    logs = []
-    for row in rows:
-        ts = true_shooting_pct(row["PTS"], row["FGA"], row["FTA"])
-        eff = efficiency(
-            row["PTS"], row["REB"], row["AST"], row["STL"], row["BLK"],
-            row["FGM"], row["FGA"], row["FTM"], row["FTA"], row["TOV"],
-        )
-        log = GameLog(
-            player_id=player.id,
-            game_id=row["Game_ID"],
-            game_date=datetime.strptime(row["GAME_DATE"], "%b %d, %Y"),
-            matchup=row["MATCHUP"],
-            opponent_abbr=row["MATCHUP"].split()[-1],
-            min=row["MIN"] or 0,
-            pts=row["PTS"],
-            reb=row["REB"],
-            ast=row["AST"],
-            stl=row["STL"],
-            blk=row["BLK"],
-            tov=row["TOV"],
-            fgm=row["FGM"],
-            fga=row["FGA"],
-            fg3m=row["FG3M"],
-            fg3a=row["FG3A"],
-            ftm=row["FTM"],
-            fta=row["FTA"],
-            plus_minus=row["PLUS_MINUS"] or 0,
-            ts_pct=ts,
-            per=eff,
-        )
-        db.add(log)
-        logs.append(log)
-    db.commit()
-    logs.sort(key=lambda g: g.game_date)
-    return logs
 
 
 @router.get("/players")
