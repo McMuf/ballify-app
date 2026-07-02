@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { apiFetch } from "@/lib/api";
 import StatTrendChart from "@/components/StatTrendChart";
 import SentimentGauge from "@/components/SentimentGauge";
+import WatchButton from "@/components/WatchButton";
 import type { PlayerDetail, SentimentGaugeData, TrendStat } from "@/lib/types";
 import { TREND_STATS } from "@/lib/types";
 
@@ -41,25 +42,28 @@ export default function PlayerDetailClient({ playerId }: { playerId: number }) {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex items-center gap-4 rounded-lg border border-hairline bg-surface p-6">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={player.headshot_url}
-          alt=""
-          className="h-20 w-20 rounded-full bg-page object-cover"
-          onError={(e) => {
-            (e.target as HTMLImageElement).style.visibility = "hidden";
-          }}
-        />
-        <div>
-          <p className="text-xs uppercase tracking-wide text-ink-muted">
-            {player.team ? `${player.team.city} ${player.team.name}` : "Free agent"} ·{" "}
-            {player.position}
-            {player.jersey_number ? ` · #${player.jersey_number}` : ""}
-          </p>
-          <h1 className="text-2xl font-semibold text-ink">{player.full_name}</h1>
-          <p className="mt-1 text-sm text-ink-secondary">{player.games_played} games played this season</p>
+      <div className="flex items-center justify-between gap-4 rounded-lg border border-hairline bg-surface p-6">
+        <div className="flex items-center gap-4">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={player.headshot_url}
+            alt=""
+            className="h-20 w-20 rounded-full bg-page object-cover"
+            onError={(e) => {
+              (e.target as HTMLImageElement).style.visibility = "hidden";
+            }}
+          />
+          <div>
+            <p className="text-xs uppercase tracking-wide text-ink-muted">
+              {player.team ? `${player.team.city} ${player.team.name}` : "Free agent"} ·{" "}
+              {player.position}
+              {player.jersey_number ? ` · #${player.jersey_number}` : ""}
+            </p>
+            <h1 className="text-2xl font-semibold text-ink">{player.full_name}</h1>
+            <p className="mt-1 text-sm text-ink-secondary">{player.games_played} games played this season</p>
+          </div>
         </div>
+        <WatchButton subjectType="player" subjectId={player.id} />
       </div>
 
       {sentimentGauge && <SentimentGauge gauge={sentimentGauge} title="Sentiment" />}

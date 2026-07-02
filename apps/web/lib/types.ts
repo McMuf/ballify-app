@@ -1,3 +1,26 @@
+export type WatchlistEntry = {
+  id: number;
+  subject_type: "player" | "team";
+  subject_id: number;
+  added_at: string;
+  alert_big_stat_night: boolean;
+  alert_sentiment_swing: boolean;
+  unread_alert_count: number;
+  name: string;
+  subtitle: string;
+  headshot_url: string;
+};
+
+export type AlertEntry = {
+  id: number;
+  watchlist_item_id: number;
+  kind: "big_stat_night" | "sentiment_swing";
+  message: string;
+  triggered_at: string;
+  read: boolean;
+  subject_name: string;
+};
+
 export type TradeRumor = {
   id: number;
   headline: string;

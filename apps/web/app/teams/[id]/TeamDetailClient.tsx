@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { apiFetch } from "@/lib/api";
 import SentimentGauge from "@/components/SentimentGauge";
+import WatchButton from "@/components/WatchButton";
 import type { GameSummary, SentimentGaugeData, TeamDetail } from "@/lib/types";
 
 function StatTile({ label, value }: { label: string; value: string }) {
@@ -44,28 +45,31 @@ export default function TeamDetailClient({ teamId }: { teamId: number }) {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex items-center gap-4 rounded-lg border border-hairline bg-surface p-6">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={team.logo_url}
-          alt=""
-          className="h-16 w-16"
-          onError={(e) => {
-            (e.target as HTMLImageElement).style.visibility = "hidden";
-          }}
-        />
-        <div>
-          <p className="text-xs uppercase tracking-wide text-ink-muted">
-            {team.conference}ern Conference · {team.division}
-          </p>
-          <h1 className="text-2xl font-semibold text-ink">
-            {team.city} {team.name}
-          </h1>
-          <p className={`mt-1 text-sm font-medium tabular-nums ${pctColor}`}>
-            {s.wins}-{s.losses} ({(s.win_pct * 100).toFixed(1)}%) · Rank #{s.conference_rank} ·{" "}
-            {s.streak}
-          </p>
+      <div className="flex items-center justify-between gap-4 rounded-lg border border-hairline bg-surface p-6">
+        <div className="flex items-center gap-4">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={team.logo_url}
+            alt=""
+            className="h-16 w-16"
+            onError={(e) => {
+              (e.target as HTMLImageElement).style.visibility = "hidden";
+            }}
+          />
+          <div>
+            <p className="text-xs uppercase tracking-wide text-ink-muted">
+              {team.conference}ern Conference · {team.division}
+            </p>
+            <h1 className="text-2xl font-semibold text-ink">
+              {team.city} {team.name}
+            </h1>
+            <p className={`mt-1 text-sm font-medium tabular-nums ${pctColor}`}>
+              {s.wins}-{s.losses} ({(s.win_pct * 100).toFixed(1)}%) · Rank #{s.conference_rank} ·{" "}
+              {s.streak}
+            </p>
+          </div>
         </div>
+        <WatchButton subjectType="team" subjectId={team.id} />
       </div>
 
       {todaysGame && (
