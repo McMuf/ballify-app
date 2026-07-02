@@ -1,4 +1,3 @@
-import re
 from datetime import datetime, timedelta
 
 from sqlalchemy import select
@@ -7,7 +6,7 @@ from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
 from app.db.models import Player, SentimentSnapshot, Team
 from app.services import news_service, reddit_service
-from app.services.text_utils import fold
+from app.services.text_utils import find_mentions as _mentions
 
 _analyzer = SentimentIntensityAnalyzer()
 
@@ -15,18 +14,6 @@ _analyzer = SentimentIntensityAnalyzer()
 def score_text(text: str) -> float:
     """-1 (bearish) .. 1 (bullish), via VADER's compound score."""
     return _analyzer.polarity_scores(text)["compound"]
-
-
-def _mentions(text: str, players: list[Player], teams: list[Team]) -> tuple[list[Player], list[Team]]:
-    folded = fold(text)
-    matched_players = [p for p in players if fold(p.full_name) in folded]
-    matched_teams = []
-    for t in teams:
-        # word-boundary match on the nickname (e.g. "Magic") to cut down false
-        # positives from common-English team names inside unrelated prose
-        if re.search(rf"\b{re.escape(fold(t.name))}\b", folded):
-            matched_teams.append(t)
-    return matched_players, matched_teams
 
 
 def _existing_keys(db: Session, source: str, since: datetime) -> set[tuple[str, int, datetime]]:

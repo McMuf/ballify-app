@@ -1,3 +1,25 @@
+export type TradeRumor = {
+  id: number;
+  headline: string;
+  url: string;
+  source_name: string;
+  credibility_tier: 1 | 2 | 3;
+  players_mentioned: string[];
+  teams_mentioned: string[];
+  published_at: string;
+};
+
+export type InjuryReportRow = {
+  player_id: number;
+  player_name: string;
+  team_id: number;
+  team_abbreviation: string;
+  status: string;
+  description: string;
+  win_prob_impact: number;
+  updated_at: string;
+};
+
 export type TeamSummary = {
   id: number;
   abbreviation: string;

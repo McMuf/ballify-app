@@ -16,3 +16,6 @@ apps/web/.env*.local
 .DS_Store
 .vscode/
 .idea/
+
+# local agent session state
+.claude/
