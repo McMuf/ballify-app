@@ -163,6 +163,41 @@ export type SentimentGaugeData = {
   by_source: Record<string, number>;
 };
 
+export type ScreenerPlayer = {
+  id: number;
+  full_name: string;
+  team_abbreviation: string;
+  games_played: number;
+  pts: number;
+  reb: number;
+  ast: number;
+  stl: number;
+  blk: number;
+  ts_pct: number;
+  sentiment_score: number | null;
+};
+
+export type DraftPick = {
+  overall: number;
+  round: number;
+  pick: number;
+  traded: boolean;
+  player_name: string;
+  position: string;
+  height: string;
+  weight: string;
+  college: string;
+  headshot_url: string;
+  overall_rank: string | null;
+  team: { id: number; abbreviation: string; name: string } | null;
+};
+
+export type DraftResponse = {
+  year: number;
+  status: string;
+  picks: DraftPick[];
+};
+
 export type PlayerDetail = {
   id: number;
   full_name: string;

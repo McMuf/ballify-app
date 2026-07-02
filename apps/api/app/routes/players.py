@@ -1,16 +1,83 @@
+from datetime import datetime, timedelta
+
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from app.db.models import Player, Team
+from app.db.models import Player, SentimentSnapshot, Team
 from app.db.session import get_db
+from app.services import nba_data
 from app.services.game_logs import ensure_game_logs as _ensure_game_logs
-from app.services.stats_calc import season_high_low
+from app.services.stats_calc import season_high_low, true_shooting_pct
 from app.services.text_utils import fold as _fold
 
 router = APIRouter()
 
 TRACKED_STATS = ["pts", "reb", "ast", "stl", "blk", "tov", "min", "ts_pct", "eff"]
+
+
+@router.get("/players/screener")
+def player_screener(
+    search: str = Query(default=""),
+    min_pts: float = Query(default=0),
+    min_reb: float = Query(default=0),
+    min_ast: float = Query(default=0),
+    min_stl: float = Query(default=0),
+    min_blk: float = Query(default=0),
+    sentiment: str = Query(default="any"),  # any | bullish | bearish
+    limit: int = Query(default=100, le=300),
+    db: Session = Depends(get_db),
+):
+    rows = nba_data.fetch_league_player_stats()
+    teams = {t.id: t for t in db.execute(select(Team)).scalars().all()}
+
+    cutoff = datetime.utcnow() - timedelta(hours=72)
+    sentiment_rows = db.execute(
+        select(SentimentSnapshot.subject_id, SentimentSnapshot.score)
+        .where(SentimentSnapshot.subject_type == "player")
+        .where(SentimentSnapshot.captured_at >= cutoff)
+    ).all()
+    sentiment_by_player: dict[int, list[float]] = {}
+    for pid, score in sentiment_rows:
+        sentiment_by_player.setdefault(pid, []).append(score)
+    avg_sentiment = {pid: sum(v) / len(v) for pid, v in sentiment_by_player.items()}
+
+    needle = _fold(search) if search else ""
+    out = []
+    for row in rows:
+        if row["GP"] == 0:
+            continue
+        pts, reb, ast, stl, blk = row["PTS"], row["REB"], row["AST"], row["STL"], row["BLK"]
+        if pts < min_pts or reb < min_reb or ast < min_ast or stl < min_stl or blk < min_blk:
+            continue
+        if needle and needle not in _fold(row["PLAYER_NAME"]):
+            continue
+
+        s = avg_sentiment.get(row["PLAYER_ID"])
+        if sentiment == "bullish" and (s is None or s < 0.1):
+            continue
+        if sentiment == "bearish" and (s is None or s > -0.1):
+            continue
+
+        team = teams.get(row["TEAM_ID"])
+        out.append(
+            {
+                "id": row["PLAYER_ID"],
+                "full_name": row["PLAYER_NAME"],
+                "team_abbreviation": team.abbreviation if team else row["TEAM_ABBREVIATION"],
+                "games_played": row["GP"],
+                "pts": pts,
+                "reb": reb,
+                "ast": ast,
+                "stl": stl,
+                "blk": blk,
+                "ts_pct": true_shooting_pct(pts, row["FGA"], row["FTA"]),
+                "sentiment_score": round(s, 3) if s is not None else None,
+            }
+        )
+
+    out.sort(key=lambda r: -r["pts"])
+    return out[:limit]
 
 
 @router.get("/players")
