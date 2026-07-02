@@ -112,3 +112,36 @@ def fetch_league_standings(season: str | None = None) -> list[dict]:
     rows = _result_set_to_dicts(payload, 0)
     _standings_cache[season] = (datetime.utcnow(), rows)
     return rows
+
+
+_league_stats_cache: dict[str, tuple[datetime, list[dict]]] = {}
+_LEAGUE_STATS_TTL = timedelta(minutes=10)
+
+# leaguedashplayerstats needs this exact full parameter set — a partial set
+# (e.g. just Season/SeasonType/PerMode) 500s server-side. Captured from
+# nba_api's own endpoint defaults (LeagueDashPlayerStats(get_request=False)).
+_LEAGUE_STATS_BASE_PARAMS = {
+    "LastNGames": "0", "MeasureType": "Base", "Month": "0", "OpponentTeamID": 0,
+    "PaceAdjust": "N", "Period": "0", "PlusMinus": "N", "Rank": "N",
+    "SeasonType": "Regular Season", "College": "", "Conference": "", "Country": "",
+    "DateFrom": "", "DateTo": "", "Division": "", "DraftPick": "", "DraftYear": "",
+    "GameScope": "", "GameSegment": "", "Height": "", "LeagueID": "", "Location": "",
+    "Outcome": "", "PORound": "", "PlayerExperience": "", "PlayerPosition": "",
+    "SeasonSegment": "", "ShotClockRange": "", "StarterBench": "", "TeamID": "",
+    "TwoWay": "", "VsConference": "", "VsDivision": "", "Weight": "",
+}
+
+
+def fetch_league_player_stats(season: str | None = None) -> list[dict]:
+    """Per-game averages for every active player in one call — the basis for
+    the screener. Fetching this per-player (500+ live calls) would be far
+    too slow; this endpoint gives the whole league in a single request."""
+    season = season or current_season()
+    cached = _league_stats_cache.get(season)
+    if cached and datetime.utcnow() - cached[0] < _LEAGUE_STATS_TTL:
+        return cached[1]
+    params = {**_LEAGUE_STATS_BASE_PARAMS, "Season": season, "PerMode": "PerGame"}
+    payload = _get("leaguedashplayerstats", params)
+    rows = _result_set_to_dicts(payload, 0)
+    _league_stats_cache[season] = (datetime.utcnow(), rows)
+    return rows

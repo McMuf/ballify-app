@@ -30,10 +30,10 @@ def fetch_scoreboard(date: str | None = None) -> list[dict]:
                 "period": status.get("period", 0),
                 "clock": status.get("displayClock", ""),
                 "home_team_abbr": home["team"]["abbreviation"],
-                "home_team_key": team_key(home["team"]["location"], home["team"]["name"]),
+                "home_team_key": team_key(home["team"]["name"]),
                 "home_score": int(home.get("score", 0) or 0),
                 "away_team_abbr": away["team"]["abbreviation"],
-                "away_team_key": team_key(away["team"]["location"], away["team"]["name"]),
+                "away_team_key": team_key(away["team"]["name"]),
                 "away_score": int(away.get("score", 0) or 0),
             }
         )

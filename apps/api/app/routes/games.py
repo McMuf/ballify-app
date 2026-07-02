@@ -21,14 +21,15 @@ LIVE_POLL_INTERVAL_SECONDS = 15
 
 
 def _team_by_key(db: Session) -> dict[str, Team]:
-    # keyed by city+nickname, not abbreviation: ESPN's scoreboard/summary
-    # endpoints use short-form abbreviations ("SA", "NY") that don't match
-    # nba.com's stats API convention ("SAS", "NYK") for the same teams.
-    return {team_key(t.city, t.name): t for t in db.execute(select(Team)).scalars().all()}
+    # keyed by nickname, not abbreviation or city: ESPN's scoreboard/summary
+    # endpoints use short-form abbreviations ("SA", "NY") and inconsistent
+    # city names ("LA" vs "Los Angeles") that don't match nba.com's stats
+    # API — the nickname alone is unique league-wide and stable across both.
+    return {team_key(t.name): t for t in db.execute(select(Team)).scalars().all()}
 
 
 def _espn_team_key(team_obj: dict) -> str:
-    return team_key(team_obj["location"], team_obj["name"])
+    return team_key(team_obj["name"])
 
 
 @router.get("/games/today")
