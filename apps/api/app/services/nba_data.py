@@ -81,6 +81,22 @@ def fetch_player_game_log(player_id: int, season: str | None = None) -> list[dic
     return _result_set_to_dicts(payload, 0)
 
 
+def fetch_player_career_row(player_id: int, season: str | None = None) -> dict | None:
+    """Current-season per-game averages via the lightweight career-stats
+    endpoint — used where a full game log isn't otherwise needed (e.g.
+    injury impact estimates for players whose ticker page nobody has
+    opened yet)."""
+    season = season or current_season()
+    payload = _get("playercareerstats", {"PlayerID": player_id, "PerMode": "PerGame", "LeagueID": "00"})
+    result_sets = {rs["name"]: rs for rs in payload["resultSets"]}
+    season_totals = result_sets.get("SeasonTotalsRegularSeason")
+    if not season_totals or not season_totals["rowSet"]:
+        return None
+    rows = [dict(zip(season_totals["headers"], row)) for row in season_totals["rowSet"]]
+    matching = [r for r in rows if r["SEASON_ID"] == season]
+    return matching[-1] if matching else rows[-1]
+
+
 _standings_cache: dict[str, tuple[datetime, list[dict]]] = {}
 _STANDINGS_TTL = timedelta(minutes=10)
 
