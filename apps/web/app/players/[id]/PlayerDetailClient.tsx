@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import { apiFetch } from "@/lib/api";
 import StatTrendChart from "@/components/StatTrendChart";
-import type { PlayerDetail, TrendStat } from "@/lib/types";
+import SentimentGauge from "@/components/SentimentGauge";
+import type { PlayerDetail, SentimentGaugeData, TrendStat } from "@/lib/types";
 import { TREND_STATS } from "@/lib/types";
 
 const STAT_LABELS: Record<TrendStat, string> = {
@@ -22,6 +23,7 @@ function formatStat(stat: TrendStat, value: number): string {
 
 export default function PlayerDetailClient({ playerId }: { playerId: number }) {
   const [player, setPlayer] = useState<PlayerDetail | null>(null);
+  const [sentimentGauge, setSentimentGauge] = useState<SentimentGaugeData | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [activeStat, setActiveStat] = useState<TrendStat>("pts");
 
@@ -29,6 +31,9 @@ export default function PlayerDetailClient({ playerId }: { playerId: number }) {
     apiFetch<PlayerDetail>(`/players/${playerId}`)
       .then(setPlayer)
       .catch(() => setError("Could not load this player."));
+    apiFetch<SentimentGaugeData>(`/sentiment/player/${playerId}`)
+      .then(setSentimentGauge)
+      .catch(() => {});
   }, [playerId]);
 
   if (error) return <p className="text-sm text-critical">{error}</p>;
@@ -56,6 +61,8 @@ export default function PlayerDetailClient({ playerId }: { playerId: number }) {
           <p className="mt-1 text-sm text-ink-secondary">{player.games_played} games played this season</p>
         </div>
       </div>
+
+      {sentimentGauge && <SentimentGauge gauge={sentimentGauge} title="Sentiment" />}
 
       <div className="grid grid-cols-3 gap-3 sm:grid-cols-6">
         {TREND_STATS.map((stat) => (

@@ -67,6 +67,13 @@ export type HighLow = { high: number; low: number };
 export const TREND_STATS = ["pts", "reb", "ast", "min", "ts_pct", "eff"] as const;
 export type TrendStat = (typeof TREND_STATS)[number];
 
+export type SentimentGaugeData = {
+  score: number | null;
+  label: string;
+  volume: number;
+  by_source: Record<string, number>;
+};
+
 export type PlayerDetail = {
   id: number;
   full_name: string;

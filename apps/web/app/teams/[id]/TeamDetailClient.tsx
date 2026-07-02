@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { apiFetch } from "@/lib/api";
-import type { TeamDetail } from "@/lib/types";
+import SentimentGauge from "@/components/SentimentGauge";
+import type { SentimentGaugeData, TeamDetail } from "@/lib/types";
 
 function StatTile({ label, value }: { label: string; value: string }) {
   return (
@@ -16,12 +17,16 @@ function StatTile({ label, value }: { label: string; value: string }) {
 
 export default function TeamDetailClient({ teamId }: { teamId: number }) {
   const [team, setTeam] = useState<TeamDetail | null>(null);
+  const [sentimentGauge, setSentimentGauge] = useState<SentimentGaugeData | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     apiFetch<TeamDetail>(`/teams/${teamId}`)
       .then(setTeam)
       .catch(() => setError("Could not load this team."));
+    apiFetch<SentimentGaugeData>(`/sentiment/team/${teamId}`)
+      .then(setSentimentGauge)
+      .catch(() => {});
   }, [teamId]);
 
   if (error) return <p className="text-sm text-critical">{error}</p>;
@@ -55,6 +60,8 @@ export default function TeamDetailClient({ teamId }: { teamId: number }) {
           </p>
         </div>
       </div>
+
+      {sentimentGauge && <SentimentGauge gauge={sentimentGauge} title="Sentiment" />}
 
       <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         <StatTile label="Playoff odds" value={`${(team.playoff_odds * 100).toFixed(0)}%`} />
