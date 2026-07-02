@@ -95,11 +95,13 @@ export default function GameDetailClient({ gameId }: { gameId: string }) {
           points={points}
           homeAbbr={detail.home_team.abbreviation}
           sentimentHomeShare={meta?.sentiment_home_share ?? detail.sentiment_home_share}
+          oddsHomeShare={detail.odds_home_share}
         />
         <p className="mt-2 text-xs text-ink-muted">
           Blue line is ESPN&apos;s play-by-play win-probability model. The violet reference line is a
           crowd-sentiment estimate from recent news/Reddit activity — fan mood, not a prediction, and it
           doesn&apos;t update play-by-play.
+          {detail.odds_home_share !== null && " The orange line is the sportsbook-market-implied probability."}
         </p>
       </div>
     </div>
