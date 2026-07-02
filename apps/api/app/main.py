@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.config import get_settings
 from app.db.session import init_db
-from app.routes import health
+from app.routes import health, players, teams
 
 settings = get_settings()
 
@@ -26,3 +26,5 @@ app.add_middleware(
 )
 
 app.include_router(health.router, prefix="/api")
+app.include_router(teams.router, prefix="/api")
+app.include_router(players.router, prefix="/api")
