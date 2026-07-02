@@ -3,7 +3,7 @@ import logging
 from apscheduler.schedulers.background import BackgroundScheduler
 
 from app.db.session import SessionLocal
-from app.services import alerts_service, injury_service, sentiment, trades_service
+from app.services import alerts_service, backtest_service, injury_service, odds_service, sentiment, trades_service
 
 logger = logging.getLogger("ballify.scheduler")
 
@@ -50,12 +50,36 @@ def _refresh_injuries_job() -> None:
         db.close()
 
 
+def _refresh_odds_job() -> None:
+    db = SessionLocal()
+    try:
+        count = odds_service.refresh_odds(db)
+        logger.info("odds refresh: %d snapshots", count)
+    except Exception:
+        logger.exception("odds refresh failed")
+    finally:
+        db.close()
+
+
+def _refresh_backtest_job() -> None:
+    db = SessionLocal()
+    try:
+        count = backtest_service.check_recent_games(db)
+        logger.info("backtest refresh: %d new results", count)
+    except Exception:
+        logger.exception("backtest refresh failed")
+    finally:
+        db.close()
+
+
 def start() -> None:
     if scheduler.running:
         return
     scheduler.add_job(_refresh_sentiment_job, "interval", minutes=10, id="sentiment_refresh")
     scheduler.add_job(_refresh_trades_job, "interval", minutes=10, id="trades_refresh")
     scheduler.add_job(_refresh_injuries_job, "interval", minutes=30, id="injuries_refresh")
+    scheduler.add_job(_refresh_odds_job, "interval", minutes=30, id="odds_refresh")
+    scheduler.add_job(_refresh_backtest_job, "interval", hours=6, id="backtest_refresh")
     scheduler.start()
 
 

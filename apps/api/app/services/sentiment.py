@@ -122,14 +122,21 @@ def refresh_reddit_sentiment(db: Session) -> int:
     return count
 
 
-def gauge_for(db: Session, subject_type: str, subject_id: int, window_hours: int = 72) -> dict:
-    cutoff = datetime.utcnow() - timedelta(hours=window_hours)
+def gauge_for(
+    db: Session, subject_type: str, subject_id: int, window_hours: int = 72, asof: datetime | None = None
+) -> dict:
+    """asof lets backtesting ask 'what did sentiment look like as of this
+    past date' instead of always reading current sentiment — using today's
+    sentiment to grade a days-old game would be hindsight bias."""
+    asof = asof or datetime.utcnow()
+    cutoff = asof - timedelta(hours=window_hours)
     rows = (
         db.execute(
             select(SentimentSnapshot)
             .where(SentimentSnapshot.subject_type == subject_type)
             .where(SentimentSnapshot.subject_id == subject_id)
             .where(SentimentSnapshot.captured_at >= cutoff)
+            .where(SentimentSnapshot.captured_at <= asof)
         )
         .scalars()
         .all()
