@@ -1,0 +1,88 @@
+@import "tailwindcss";
+
+:root {
+  --color-page: #f9f9f7;
+  --color-surface: #fcfcfb;
+  --color-ink: #0b0b0b;
+  --color-ink-secondary: #52514e;
+  --color-ink-muted: #898781;
+  --color-gridline: #e1e0d9;
+  --color-baseline: #c3c2b7;
+  --color-hairline: rgba(11, 11, 11, 0.1);
+
+  --color-good: #0ca30c;
+  --color-good-text: #006300;
+  --color-warning: #fab219;
+  --color-serious: #ec835a;
+  --color-critical: #d03b3b;
+
+  --color-accent: #2a78d6;
+  --color-accent-aqua: #1baf7a;
+  --color-accent-yellow: #eda100;
+  --color-accent-green: #008300;
+  --color-accent-violet: #4a3aa7;
+  --color-accent-magenta: #e87ba4;
+  --color-accent-orange: #eb6834;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-page: #0d0d0d;
+    --color-surface: #1a1a19;
+    --color-ink: #ffffff;
+    --color-ink-secondary: #c3c2b7;
+    --color-ink-muted: #898781;
+    --color-gridline: #2c2c2a;
+    --color-baseline: #383835;
+    --color-hairline: rgba(255, 255, 255, 0.1);
+
+    --color-good: #0ca30c;
+    --color-good-text: #0ca30c;
+    --color-warning: #fab219;
+    --color-serious: #ec835a;
+    --color-critical: #e66767;
+
+    --color-accent: #3987e5;
+    --color-accent-aqua: #199e70;
+    --color-accent-yellow: #c98500;
+    --color-accent-green: #008300;
+    --color-accent-violet: #9085e9;
+    --color-accent-magenta: #d55181;
+    --color-accent-orange: #d95926;
+  }
+}
+
+@theme inline {
+  --color-page: var(--color-page);
+  --color-surface: var(--color-surface);
+  --color-ink: var(--color-ink);
+  --color-ink-secondary: var(--color-ink-secondary);
+  --color-ink-muted: var(--color-ink-muted);
+  --color-gridline: var(--color-gridline);
+  --color-baseline: var(--color-baseline);
+  --color-hairline: var(--color-hairline);
+  --color-good: var(--color-good);
+  --color-good-text: var(--color-good-text);
+  --color-warning: var(--color-warning);
+  --color-serious: var(--color-serious);
+  --color-critical: var(--color-critical);
+  --color-accent: var(--color-accent);
+  --color-accent-aqua: var(--color-accent-aqua);
+  --color-accent-yellow: var(--color-accent-yellow);
+  --color-accent-green: var(--color-accent-green);
+  --color-accent-violet: var(--color-accent-violet);
+  --color-accent-magenta: var(--color-accent-magenta);
+  --color-accent-orange: var(--color-accent-orange);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--color-page);
+  color: var(--color-ink);
+  font-family: var(--font-sans), system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
