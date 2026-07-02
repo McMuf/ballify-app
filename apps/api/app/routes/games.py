@@ -8,7 +8,7 @@ from sse_starlette.sse import EventSourceResponse
 
 from app.db.models import Team
 from app.db.session import get_db
-from app.services import live_games, win_probability
+from app.services import live_games, odds_service, win_probability
 from app.services.text_utils import team_key
 
 router = APIRouter()
@@ -72,6 +72,8 @@ def game_detail(game_id: str, db: Session = Depends(get_db)):
     if home_team and away_team:
         sentiment_share = win_probability.sentiment_home_share(db, home_team.id, away_team.id)
 
+    odds_snapshot = odds_service.latest_odds(db, game_id)
+
     return {
         "id": game_id,
         "state": state,
@@ -83,6 +85,7 @@ def game_detail(game_id: str, db: Session = Depends(get_db)):
         else {"abbreviation": away["team"]["abbreviation"], "name": away["team"]["name"]},
         "timeline": timeline,
         "sentiment_home_share": sentiment_share,
+        "odds_home_share": odds_snapshot.home_implied_prob if odds_snapshot else None,
     }
 
 

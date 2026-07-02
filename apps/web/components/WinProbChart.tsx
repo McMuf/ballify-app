@@ -43,10 +43,12 @@ export default function WinProbChart({
   points,
   homeAbbr,
   sentimentHomeShare,
+  oddsHomeShare,
 }: {
   points: WinProbPoint[];
   homeAbbr: string;
   sentimentHomeShare: number | null;
+  oddsHomeShare: number | null;
 }) {
   if (points.length === 0) {
     return <p className="py-12 text-center text-sm text-ink-muted">Waiting for play data…</p>;
@@ -77,6 +79,19 @@ export default function WinProbChart({
               value: `Sentiment ${pct(sentimentHomeShare)}`,
               position: "right",
               fill: "var(--color-accent-violet)",
+              fontSize: 11,
+            }}
+          />
+        )}
+        {oddsHomeShare !== null && (
+          <ReferenceLine
+            y={oddsHomeShare}
+            stroke="var(--color-accent-orange)"
+            strokeDasharray="4 4"
+            label={{
+              value: `Market ${pct(oddsHomeShare)}`,
+              position: "insideTopRight",
+              fill: "var(--color-accent-orange)",
               fontSize: 11,
             }}
           />

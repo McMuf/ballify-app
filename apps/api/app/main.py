@@ -6,7 +6,20 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.core import scheduler
 from app.core.config import get_settings
 from app.db.session import init_db
-from app.routes import draft, games, health, injuries, news, players, sentiment, teams, trades, watchlist
+from app.routes import (
+    backtest,
+    draft,
+    games,
+    health,
+    injuries,
+    news,
+    odds,
+    players,
+    sentiment,
+    teams,
+    trades,
+    watchlist,
+)
 
 settings = get_settings()
 
@@ -38,3 +51,5 @@ app.include_router(injuries.router, prefix="/api")
 app.include_router(games.router, prefix="/api")
 app.include_router(watchlist.router, prefix="/api")
 app.include_router(draft.router, prefix="/api")
+app.include_router(odds.router, prefix="/api")
+app.include_router(backtest.router, prefix="/api")

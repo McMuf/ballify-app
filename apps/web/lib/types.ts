@@ -85,6 +85,28 @@ export type GameDetail = {
   away_team: GameTeamRef;
   timeline: WinProbPoint[];
   sentiment_home_share: number | null;
+  odds_home_share: number | null;
+};
+
+export type BacktestWeek = { week: string; accuracy: number; games: number };
+
+export type BacktestResultRow = {
+  game_id: string;
+  game_date: string;
+  favored: string;
+  actual_winner: string;
+  correct: boolean;
+  confidence: number;
+  is_demo_seed: boolean;
+};
+
+export type BacktestSummary = {
+  total_games: number;
+  overall_accuracy: number | null;
+  demo_seed_count: number;
+  real_count: number;
+  accuracy_over_time: BacktestWeek[];
+  recent_results: BacktestResultRow[];
 };
 
 export type TeamSummary = {
