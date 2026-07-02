@@ -22,6 +22,13 @@ def fold(text: str) -> str:
     return "".join(c for c in normalized if not unicodedata.combining(c)).lower()
 
 
+def team_key(city: str, name: str) -> str:
+    """Match key for teams across data sources with inconsistent abbreviation
+    conventions (nba.com's stats API says 'SAS'/'NYK', ESPN's scoreboard says
+    'SA'/'NY' for the same teams) — city+nickname is stable across both."""
+    return fold(f"{city} {name}")
+
+
 def find_mentions(text: str, players: list[Player], teams: list[Team]) -> tuple[list[Player], list[Team]]:
     folded = fold(text)
     matched_players = [p for p in players if fold(p.full_name) in folded]
