@@ -28,7 +28,7 @@ function WinProbTooltip({
   if (!active || !payload?.length) return null;
   const p = payload[0].payload;
   return (
-    <div className="rounded-md border border-hairline bg-surface px-3 py-2 text-xs shadow-sm">
+    <div className="border border-hairline bg-surface px-3 py-2 text-xs shadow-sm">
       <p className="font-medium text-ink">
         Q{p.period} {p.clock} · {p.away_score}-{p.home_score}
       </p>

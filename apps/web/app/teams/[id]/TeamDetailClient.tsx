@@ -9,7 +9,7 @@ import type { GameSummary, SentimentGaugeData, TeamDetail } from "@/lib/types";
 
 function StatTile({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-md border border-hairline bg-page px-4 py-3">
+    <div className="border border-hairline bg-page px-4 py-3">
       <p className="text-xs uppercase tracking-wide text-ink-muted">{label}</p>
       <p className="mt-1 text-lg font-semibold tabular-nums text-ink">{value}</p>
     </div>
@@ -45,7 +45,7 @@ export default function TeamDetailClient({ teamId }: { teamId: number }) {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex items-center justify-between gap-4 rounded-lg border border-hairline bg-surface p-6">
+      <div className="flex items-center justify-between gap-4 border border-hairline p-6">
         <div className="flex items-center gap-4">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
@@ -75,7 +75,7 @@ export default function TeamDetailClient({ teamId }: { teamId: number }) {
       {todaysGame && (
         <Link
           href={`/games/${todaysGame.id}`}
-          className="flex items-center justify-between rounded-lg border border-hairline bg-surface p-4 transition-colors hover:border-accent"
+          className="flex items-center justify-between border border-hairline p-4 transition-colors hover:border-accent"
         >
           <div>
             <p className="text-xs uppercase tracking-wide text-ink-muted">
@@ -101,7 +101,7 @@ export default function TeamDetailClient({ teamId }: { teamId: number }) {
         <StatTile label="Opp Pts/G" value={s.opp_points_per_game.toFixed(1)} />
       </div>
 
-      <div className="overflow-hidden rounded-lg border border-hairline bg-surface">
+      <div className="overflow-hidden border border-hairline">
         <div className="border-b border-hairline px-4 py-3">
           <h2 className="text-sm font-medium uppercase tracking-wide text-ink-muted">Roster</h2>
         </div>

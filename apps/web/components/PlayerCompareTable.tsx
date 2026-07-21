@@ -34,7 +34,7 @@ export default function PlayerCompareTable({ playerIds }: { playerIds: number[] 
   if (!players) return <p className="text-sm text-ink-secondary">Loading comparison…</p>;
 
   return (
-    <div className="overflow-x-auto rounded-lg border border-hairline bg-surface">
+    <div className="overflow-x-auto border border-hairline">
       <table className="w-full text-sm">
         <thead>
           <tr className="border-b border-hairline text-left">

@@ -21,7 +21,7 @@ function gaugeColor(score: number): string {
 export default function SentimentGauge({ gauge, title }: { gauge: Gauge; title: string }) {
   if (gauge.score === null) {
     return (
-      <div className="rounded-lg border border-hairline bg-surface p-4">
+      <div className="border border-hairline p-4">
         <h3 className="text-sm font-medium uppercase tracking-wide text-ink-muted">{title}</h3>
         <p className="mt-2 text-sm text-ink-muted">
           No sentiment data yet. Nothing matched in the last 72 hours of ESPN/Reddit activity.
@@ -34,7 +34,7 @@ export default function SentimentGauge({ gauge, title }: { gauge: Gauge; title: 
   const color = gaugeColor(gauge.score);
 
   return (
-    <div className="rounded-lg border border-hairline bg-surface p-4">
+    <div className="border border-hairline p-4">
       <div className="flex items-baseline justify-between">
         <h3 className="text-sm font-medium uppercase tracking-wide text-ink-muted">{title}</h3>
         <span className="text-xs text-ink-muted">{gauge.volume} mentions (72h)</span>
@@ -47,10 +47,10 @@ export default function SentimentGauge({ gauge, title }: { gauge: Gauge; title: 
         <span className="text-sm tabular-nums text-ink-secondary">{gauge.score.toFixed(2)}</span>
       </div>
 
-      <div className="relative mt-3 h-2 rounded-full bg-page">
+      <div className="relative mt-3 h-2 bg-page">
         <div className="absolute left-1/2 top-0 h-full w-px bg-baseline" aria-hidden />
         <div
-          className="absolute top-0 h-full rounded-full"
+          className="absolute top-0 h-full"
           style={{
             left: `${Math.min(pct, 50)}%`,
             right: `${100 - Math.max(pct, 50)}%`,

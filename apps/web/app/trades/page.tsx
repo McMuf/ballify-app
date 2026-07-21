@@ -41,12 +41,12 @@ export default function TradesPage() {
         {rumors?.map((r) => (
           <div
             key={r.id}
-            className="rounded-lg border border-hairline bg-surface p-4"
+            className="border border-hairline p-4"
           >
             <div className="flex items-start justify-between gap-4">
               <p className="font-medium text-ink">{r.headline}</p>
               {r.team_abbr && (
-                <span className="rounded-full border border-hairline px-2 py-0.5 text-xs font-medium text-ink-secondary">
+                <span className="border border-hairline px-2 py-0.5 text-xs font-medium text-ink-secondary">
                   {r.team_abbr}
                 </span>
               )}
@@ -56,12 +56,12 @@ export default function TradesPage() {
               <span>·</span>
               <span>{timeAgo(r.published_at)}</span>
               {r.teams_mentioned.map((t) => (
-                <span key={t} className="rounded-full bg-page px-2 py-0.5 text-ink-secondary">
+                <span key={t} className="bg-page px-2 py-0.5 text-ink-secondary">
                   {t}
                 </span>
               ))}
               {r.players_mentioned.map((p) => (
-                <span key={p} className="rounded-full bg-page px-2 py-0.5 text-ink-secondary">
+                <span key={p} className="bg-page px-2 py-0.5 text-ink-secondary">
                   {p}
                 </span>
               ))}

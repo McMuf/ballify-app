@@ -14,13 +14,13 @@ function PickRow({ pick }: { pick: DraftPick }) {
         <img
           src={pick.headshot_url}
           alt=""
-          className="h-10 w-10 shrink-0 rounded-full bg-page object-cover"
+          className="h-10 w-10 shrink-0 bg-page object-cover"
           onError={(e) => {
             (e.target as HTMLImageElement).style.visibility = "hidden";
           }}
         />
       ) : (
-        <div className="h-10 w-10 shrink-0 rounded-full bg-page" />
+        <div className="h-10 w-10 shrink-0 bg-page" />
       )}
       <div className="min-w-0 flex-1">
         <p className="truncate font-medium text-ink">{pick.player_name}</p>
@@ -32,7 +32,7 @@ function PickRow({ pick }: { pick: DraftPick }) {
       {pick.team ? (
         <Link
           href={`/teams/${pick.team.id}`}
-          className="shrink-0 rounded-full border border-hairline px-3 py-1 text-xs font-medium text-ink-secondary hover:border-accent hover:text-accent"
+          className="shrink-0 border border-hairline px-3 py-1 text-xs font-medium text-ink-secondary hover:border-accent hover:text-accent"
         >
           {pick.team.abbreviation}
         </Link>
@@ -69,7 +69,7 @@ export default function DraftPage() {
       </div>
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
-        <div className="overflow-hidden rounded-lg border border-hairline bg-surface">
+        <div className="overflow-hidden border border-hairline">
           <div className="border-b border-hairline px-4 py-3">
             <h2 className="text-sm font-medium uppercase tracking-wide text-ink-muted">Round 1</h2>
           </div>
@@ -77,7 +77,7 @@ export default function DraftPage() {
             <PickRow key={p.overall} pick={p} />
           ))}
         </div>
-        <div className="overflow-hidden rounded-lg border border-hairline bg-surface">
+        <div className="overflow-hidden border border-hairline">
           <div className="border-b border-hairline px-4 py-3">
             <h2 className="text-sm font-medium uppercase tracking-wide text-ink-muted">Round 2</h2>
           </div>

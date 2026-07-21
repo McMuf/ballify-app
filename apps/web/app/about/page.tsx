@@ -8,7 +8,7 @@ export default function AboutPage() {
         </p>
       </div>
 
-      <section className="rounded-lg border border-hairline bg-surface p-6">
+      <section className="border border-hairline p-6">
         <h2 className="text-sm font-medium uppercase tracking-wide text-ink-muted">What it does</h2>
         <ul className="mt-3 flex flex-col gap-2 text-sm text-ink-secondary list-disc pl-5">
           <li>Tracks NBA players and teams like market tickers, with stat trend charts</li>
@@ -22,7 +22,7 @@ export default function AboutPage() {
         </ul>
       </section>
 
-      <section className="rounded-lg border border-hairline bg-surface p-6">
+      <section className="border border-hairline p-6">
         <h2 className="text-sm font-medium uppercase tracking-wide text-ink-muted">Architecture</h2>
         <ul className="mt-3 flex flex-col gap-2 text-sm text-ink-secondary list-disc pl-5">
           <li>Frontend: Next.js (App Router) and TypeScript, styled with Tailwind</li>
@@ -36,7 +36,7 @@ export default function AboutPage() {
         </ul>
       </section>
 
-      <section className="rounded-lg border border-hairline bg-surface p-6">
+      <section className="border border-hairline p-6">
         <h2 className="text-sm font-medium uppercase tracking-wide text-ink-muted">Some of the logic</h2>
         <ul className="mt-3 flex flex-col gap-2 text-sm text-ink-secondary list-disc pl-5">
           <li>Sentiment gauge: VADER scores headlines and posts, matched to a player or team by name, averaged over a rolling window</li>

@@ -21,7 +21,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="rounded-lg border border-hairline bg-surface p-8">
+      <div className="border border-hairline p-8">
         <h1 className="text-2xl font-semibold text-ink">Ballify</h1>
         <p className="mt-2 max-w-xl text-sm text-ink-secondary">
           NBA players and teams, tracked like a market: stat tickers, sentiment gauges, live win
@@ -29,7 +29,7 @@ export default function Home() {
         </p>
       </div>
 
-      <div className="rounded-lg border border-hairline bg-surface p-6">
+      <div className="border border-hairline p-6">
         <h2 className="text-sm font-medium uppercase tracking-wide text-ink-muted">API connection</h2>
         {error && (
           <p className="mt-2 flex items-center gap-2 text-sm text-critical">

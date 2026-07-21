@@ -16,7 +16,7 @@ const STATUS_COLORS: Record<string, string> = {
 function StatusBadge({ status }: { status: string }) {
   const color = STATUS_COLORS[status] ?? "var(--color-ink-muted)";
   return (
-    <span className="rounded-full px-2 py-0.5 text-xs font-medium capitalize" style={{ color, backgroundColor: "var(--color-page)" }}>
+    <span className="px-2 py-0.5 text-xs font-medium capitalize" style={{ color, backgroundColor: "var(--color-page)" }}>
       {status}
     </span>
   );
@@ -47,7 +47,7 @@ export default function InjuriesPage() {
       {rows && rows.length === 0 && <p className="text-sm text-ink-muted">No injuries currently tracked.</p>}
 
       {rows && rows.length > 0 && (
-        <div className="overflow-hidden rounded-lg border border-hairline bg-surface">
+        <div className="overflow-hidden border border-hairline">
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-hairline text-left text-xs uppercase tracking-wide text-ink-muted">

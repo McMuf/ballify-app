@@ -7,7 +7,7 @@ import type { BacktestSummary } from "@/lib/types";
 
 function StatTile({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-md border border-hairline bg-page px-4 py-3">
+    <div className="border border-hairline bg-page px-4 py-3">
       <p className="text-xs uppercase tracking-wide text-ink-muted">{label}</p>
       <p className="mt-1 text-lg font-semibold tabular-nums text-ink">{value}</p>
     </div>
@@ -38,7 +38,7 @@ export default function BacktestPage() {
       </div>
 
       {data.total_games === 0 ? (
-        <p className="rounded-lg border border-hairline bg-surface p-4 text-sm text-ink-muted">
+        <p className="border border-hairline p-4 text-sm text-ink-muted">
           No backtest history yet. It fills in automatically as games complete and sentiment accumulates.
         </p>
       ) : (
@@ -54,21 +54,21 @@ export default function BacktestPage() {
           </div>
 
           {data.demo_seed_count > 0 && (
-            <p className="rounded-md border border-hairline bg-page px-3 py-2 text-xs text-ink-muted">
+            <p className="border border-hairline bg-page px-3 py-2 text-xs text-ink-muted">
               {data.real_count === 0
                 ? "All results below are demo-seeded: a synthetic sentiment pick against real historical game outcomes, since there's no accumulated real sentiment history yet. Real results (unlabeled) take over as the app runs."
                 : "Mix of demo-seeded and real results. demo rows are labeled below."}
             </p>
           )}
 
-          <div className="rounded-lg border border-hairline bg-surface p-4">
+          <div className="border border-hairline p-4">
             <h2 className="mb-2 text-sm font-medium uppercase tracking-wide text-ink-muted">
               Accuracy by week
             </h2>
             <AccuracyChart weeks={data.accuracy_over_time} />
           </div>
 
-          <div className="overflow-hidden rounded-lg border border-hairline bg-surface">
+          <div className="overflow-hidden border border-hairline">
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-hairline text-left text-xs uppercase tracking-wide text-ink-muted">
@@ -86,7 +86,7 @@ export default function BacktestPage() {
                     <td className="px-4 py-2 text-ink">
                       {r.favored}
                       {r.is_demo_seed && (
-                        <span className="ml-2 rounded-full bg-page px-1.5 py-0.5 text-xs text-ink-muted">
+                        <span className="ml-2 bg-page px-1.5 py-0.5 text-xs text-ink-muted">
                           demo
                         </span>
                       )}

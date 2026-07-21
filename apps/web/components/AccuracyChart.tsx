@@ -20,7 +20,7 @@ function AccuracyTooltip({ active, payload }: { active?: boolean; payload?: { pa
   if (!active || !payload?.length) return null;
   const p = payload[0].payload;
   return (
-    <div className="rounded-md border border-hairline bg-surface px-3 py-2 text-xs shadow-sm">
+    <div className="border border-hairline bg-surface px-3 py-2 text-xs shadow-sm">
       <p className="font-medium text-ink">Week of {p.week}</p>
       <p className="mt-0.5 text-ink-secondary">
         {pct(p.accuracy)} accurate ({p.games} games)

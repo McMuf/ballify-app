@@ -42,13 +42,13 @@ export default function PlayerDetailClient({ playerId }: { playerId: number }) {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex items-center justify-between gap-4 rounded-lg border border-hairline bg-surface p-6">
+      <div className="flex items-center justify-between gap-4 border border-hairline p-6">
         <div className="flex items-center gap-4">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={player.headshot_url}
             alt=""
-            className="h-20 w-20 rounded-full bg-page object-cover"
+            className="h-20 w-20 bg-page object-cover"
             onError={(e) => {
               (e.target as HTMLImageElement).style.visibility = "hidden";
             }}
@@ -70,7 +70,7 @@ export default function PlayerDetailClient({ playerId }: { playerId: number }) {
 
       <div className="grid grid-cols-3 gap-3 sm:grid-cols-6">
         {TREND_STATS.map((stat) => (
-          <div key={stat} className="rounded-md border border-hairline bg-page px-3 py-2 text-center">
+          <div key={stat} className="border border-hairline bg-page px-3 py-2 text-center">
             <p className="text-xs uppercase tracking-wide text-ink-muted">{STAT_LABELS[stat]}</p>
             <p className="mt-1 text-lg font-semibold tabular-nums text-ink">
               {formatStat(stat, player.averages[stat] ?? 0)}
@@ -79,7 +79,7 @@ export default function PlayerDetailClient({ playerId }: { playerId: number }) {
         ))}
       </div>
 
-      <div className="rounded-lg border border-hairline bg-surface p-4">
+      <div className="border border-hairline p-4">
         <div className="mb-2 flex flex-wrap gap-1">
           {TREND_STATS.map((stat) => (
             <button
@@ -87,8 +87,8 @@ export default function PlayerDetailClient({ playerId }: { playerId: number }) {
               onClick={() => setActiveStat(stat)}
               className={
                 stat === activeStat
-                  ? "rounded-full bg-accent px-3 py-1 text-xs font-medium text-white"
-                  : "rounded-full px-3 py-1 text-xs font-medium text-ink-secondary hover:bg-page"
+                  ? "bg-accent px-3 py-1 text-xs font-medium text-white"
+                  : "px-3 py-1 text-xs font-medium text-ink-secondary hover:bg-page"
               }
             >
               {STAT_LABELS[stat]}

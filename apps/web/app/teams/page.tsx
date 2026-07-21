@@ -13,7 +13,7 @@ function pctColor(pct: number) {
 
 function ConferenceTable({ conference, teams }: { conference: string; teams: TeamSummary[] }) {
   return (
-    <div className="overflow-hidden rounded-lg border border-hairline bg-surface">
+    <div className="overflow-hidden border border-hairline">
       <div className="border-b border-hairline px-4 py-3">
         <h2 className="text-sm font-medium uppercase tracking-wide text-ink-muted">
           {conference}ern Conference

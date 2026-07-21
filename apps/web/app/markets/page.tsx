@@ -76,7 +76,7 @@ function OddsBar({ game }: { game: MarketGame }) {
         <span className="text-ink-secondary">{game.away_team_abbr} {pct(awayPct)}</span>
         <span className="text-ink">{game.home_team_abbr} {pct(homePct)}</span>
       </div>
-      <div className="mt-1 flex h-2 overflow-hidden rounded-full bg-page">
+      <div className="mt-1 flex h-2 overflow-hidden bg-page">
         <div className="h-full bg-ink-muted" style={{ width: `${awayPct * 100}%` }} />
         <div className="h-full bg-accent" style={{ width: `${homePct * 100}%` }} />
       </div>
@@ -91,13 +91,13 @@ function GameCard({ game }: { game: MarketGame }) {
   return (
     <Link
       href={`/games/${game.id}`}
-      className="rounded-lg border border-hairline bg-surface p-4 transition-colors hover:border-accent"
+      className="border border-hairline p-4 transition-colors hover:border-accent"
     >
       <div className="flex items-center justify-between">
         <p className="text-xs uppercase tracking-wide text-ink-muted">{game.status_detail}</p>
         {game.state === "live" && (
-          <span className="flex items-center gap-1.5 rounded-full bg-critical/10 px-2 py-0.5 text-xs font-medium text-critical">
-            <span className="h-1.5 w-1.5 rounded-full bg-critical" /> Live
+          <span className="flex items-center gap-1.5 bg-critical/10 px-2 py-0.5 text-xs font-medium text-critical">
+            <span className="h-1.5 w-1.5 bg-critical" /> Live
           </span>
         )}
       </div>
@@ -162,7 +162,7 @@ export default function MarketsPage() {
             const [y, m, d] = e.target.value.split("-").map(Number);
             if (y && m && d) setSelectedDate(new Date(y, m - 1, d));
           }}
-          className="[color-scheme:light_dark] rounded-md border border-hairline bg-page px-2 py-1.5 text-sm text-ink focus:border-accent focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+          className="[color-scheme:light_dark] border border-hairline bg-page px-2 py-1.5 text-sm text-ink focus:border-accent focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
         />
         <span className="text-sm font-medium text-ink">{formatDisplayDate(selectedDate)}</span>
         <div className="flex items-center gap-1">
@@ -170,7 +170,7 @@ export default function MarketsPage() {
             onClick={() => setSelectedDate((d) => addDays(d, -1))}
             disabled={loading}
             aria-label="Previous day"
-            className="rounded-md border border-hairline px-2 py-1.5 text-sm text-ink-secondary hover:border-accent hover:text-accent disabled:cursor-not-allowed disabled:opacity-50"
+            className="border border-hairline px-2 py-1.5 text-sm text-ink-secondary hover:border-accent hover:text-accent disabled:cursor-not-allowed disabled:opacity-50"
           >
             ←
           </button>
@@ -178,7 +178,7 @@ export default function MarketsPage() {
             onClick={() => setSelectedDate((d) => addDays(d, 1))}
             disabled={loading}
             aria-label="Next day"
-            className="rounded-md border border-hairline px-2 py-1.5 text-sm text-ink-secondary hover:border-accent hover:text-accent disabled:cursor-not-allowed disabled:opacity-50"
+            className="border border-hairline px-2 py-1.5 text-sm text-ink-secondary hover:border-accent hover:text-accent disabled:cursor-not-allowed disabled:opacity-50"
           >
             →
           </button>

@@ -56,7 +56,7 @@ export default function PlayersPage() {
         </p>
       </div>
 
-      <div className="flex flex-wrap items-end gap-4 rounded-lg border border-hairline bg-surface p-4">
+      <div className="flex flex-wrap items-end gap-4 border border-hairline p-4">
         <div className="flex flex-col gap-1">
           <label className="text-xs text-ink-muted">Search</label>
           <input
@@ -64,7 +64,7 @@ export default function PlayersPage() {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Player name…"
-            className="w-40 rounded-md border border-hairline bg-page px-2 py-1.5 text-sm text-ink placeholder:text-ink-muted focus:border-accent focus:outline-none"
+            className="w-40 border border-hairline bg-page px-2 py-1.5 text-sm text-ink placeholder:text-ink-muted focus:border-accent focus:outline-none"
           />
         </div>
         {[
@@ -80,7 +80,7 @@ export default function PlayersPage() {
               value={f.value || ""}
               onChange={(e) => f.set(Number(e.target.value) || 0)}
               placeholder="0"
-              className="w-20 rounded-md border border-hairline bg-page px-2 py-1.5 text-sm text-ink focus:border-accent focus:outline-none"
+              className="w-20 border border-hairline bg-page px-2 py-1.5 text-sm text-ink focus:border-accent focus:outline-none"
             />
           </div>
         ))}
@@ -89,7 +89,7 @@ export default function PlayersPage() {
           <select
             value={sentimentFilter}
             onChange={(e) => setSentimentFilter(e.target.value as SentimentFilter)}
-            className="rounded-md border border-hairline bg-page px-2 py-1.5 text-sm text-ink focus:border-accent focus:outline-none"
+            className="border border-hairline bg-page px-2 py-1.5 text-sm text-ink focus:border-accent focus:outline-none"
           >
             <option value="any">Any</option>
             <option value="bullish">Bullish</option>
@@ -108,7 +108,7 @@ export default function PlayersPage() {
       {error && <p className="text-sm text-critical">{error}</p>}
 
       {players && (
-        <div className="overflow-hidden rounded-lg border border-hairline bg-surface">
+        <div className="overflow-hidden border border-hairline">
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-hairline text-left text-xs uppercase tracking-wide text-ink-muted">

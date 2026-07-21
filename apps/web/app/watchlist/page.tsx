@@ -51,13 +51,13 @@ function AddToWatchlist({ onAdded }: { onAdded: () => void }) {
   }
 
   return (
-    <div className="rounded-lg border border-hairline bg-surface p-4">
+    <div className="border border-hairline p-4">
       <input
         type="text"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Search players or teams to watch…"
-        className="w-full rounded-md border border-hairline bg-page px-3 py-2 text-sm text-ink placeholder:text-ink-muted focus:border-accent focus:outline-none"
+        className="w-full border border-hairline bg-page px-3 py-2 text-sm text-ink placeholder:text-ink-muted focus:border-accent focus:outline-none"
       />
       {query && (players.length > 0 || teams.length > 0) && (
         <div className="mt-2 flex flex-col gap-1">
@@ -65,7 +65,7 @@ function AddToWatchlist({ onAdded }: { onAdded: () => void }) {
             <button
               key={`p-${p.id}`}
               onClick={() => add("player", p.id)}
-              className="flex items-center justify-between rounded-md px-2 py-1.5 text-left text-sm hover:bg-page"
+              className="flex items-center justify-between px-2 py-1.5 text-left text-sm hover:bg-page"
             >
               <span className="text-ink">{p.full_name}</span>
               <span className="text-xs text-ink-muted">{p.team_abbreviation}</span>
@@ -75,7 +75,7 @@ function AddToWatchlist({ onAdded }: { onAdded: () => void }) {
             <button
               key={`t-${t.id}`}
               onClick={() => add("team", t.id)}
-              className="flex items-center justify-between rounded-md px-2 py-1.5 text-left text-sm hover:bg-page"
+              className="flex items-center justify-between px-2 py-1.5 text-left text-sm hover:bg-page"
             >
               <span className="text-ink">
                 {t.city} {t.name}
@@ -131,7 +131,7 @@ export default function WatchlistPage() {
 
       {error && <p className="text-sm text-critical">{error}</p>}
 
-      <div className="rounded-lg border border-hairline bg-surface p-4">
+      <div className="border border-hairline p-4">
         <div className="mb-2 flex items-center justify-between">
           <h2 className="text-sm font-medium uppercase tracking-wide text-ink-muted">
             Alerts {unreadCount > 0 && <span className="text-accent">({unreadCount} unread)</span>}
@@ -152,7 +152,7 @@ export default function WatchlistPage() {
           {alerts?.slice(0, 20).map((a) => (
             <div
               key={a.id}
-              className={`flex items-center justify-between rounded-md px-3 py-2 text-sm ${
+              className={`flex items-center justify-between px-3 py-2 text-sm ${
                 a.read ? "text-ink-secondary" : "bg-page text-ink"
               }`}
             >
@@ -172,7 +172,7 @@ export default function WatchlistPage() {
         {items?.map((item) => (
           <div
             key={item.id}
-            className="flex items-center justify-between rounded-lg border border-hairline bg-surface p-4"
+            className="flex items-center justify-between border border-hairline p-4"
           >
             <Link
               href={item.subject_type === "player" ? `/players/${item.subject_id}` : `/teams/${item.subject_id}`}
@@ -182,7 +182,7 @@ export default function WatchlistPage() {
                 <p className="font-medium text-ink hover:text-accent">
                   {item.name}
                   {item.unread_alert_count > 0 && (
-                    <span className="ml-2 rounded-full bg-critical px-1.5 py-0.5 text-xs font-medium text-white">
+                    <span className="ml-2 bg-critical px-1.5 py-0.5 text-xs font-medium text-white">
                       {item.unread_alert_count}
                     </span>
                   )}

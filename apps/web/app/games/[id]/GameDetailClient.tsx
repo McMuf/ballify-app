@@ -63,7 +63,7 @@ export default function GameDetailClient({ gameId }: { gameId: string }) {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="rounded-lg border border-hairline bg-surface p-6">
+      <div className="border border-hairline p-6">
         <div className="flex items-center justify-between">
           <div>
             <p className="text-xs uppercase tracking-wide text-ink-muted">{detail.state.status_detail}</p>
@@ -72,19 +72,19 @@ export default function GameDetailClient({ gameId }: { gameId: string }) {
             </h1>
           </div>
           {meta?.replay && (
-            <span className="rounded-full border border-hairline px-3 py-1 text-xs text-ink-muted">
+            <span className="border border-hairline px-3 py-1 text-xs text-ink-muted">
               Replaying final result
             </span>
           )}
           {meta?.state === "live" && (
-            <span className="flex items-center gap-1.5 rounded-full bg-critical/10 px-3 py-1 text-xs font-medium text-critical">
-              <span className="h-1.5 w-1.5 rounded-full bg-critical" /> Live
+            <span className="flex items-center gap-1.5 bg-critical/10 px-3 py-1 text-xs font-medium text-critical">
+              <span className="h-1.5 w-1.5 bg-critical" /> Live
             </span>
           )}
         </div>
       </div>
 
-      <div className="rounded-lg border border-hairline bg-surface p-4">
+      <div className="border border-hairline p-4">
         <div className="mb-2 flex items-center justify-between">
           <h2 className="text-sm font-medium uppercase tracking-wide text-ink-muted">
             Win probability: {detail.home_team.abbreviation}
