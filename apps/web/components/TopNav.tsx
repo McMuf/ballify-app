@@ -11,6 +11,7 @@ const NAV_ITEMS = [
   { href: "/injuries", label: "Injuries" },
   { href: "/draft", label: "Draft" },
   { href: "/backtest", label: "Backtest" },
+  { href: "/about", label: "About" },
 ];
 
 export default function TopNav() {
