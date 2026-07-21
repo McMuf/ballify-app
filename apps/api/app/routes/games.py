@@ -1,7 +1,7 @@
 import asyncio
 import json
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 from sse_starlette.sse import EventSourceResponse
@@ -33,9 +33,12 @@ def _espn_team_key(team_obj: dict) -> str:
 
 
 @router.get("/games/today")
-def games_today(db: Session = Depends(get_db)):
+def games_today(date: str | None = Query(default=None), db: Session = Depends(get_db)):
+    """date, if given, is YYYYMMDD (ESPN's format) to look up a past or future
+    day instead of today. defaults to today so the existing "today's game" card
+    on the team page doesn't need to change."""
     teams = _team_by_key(db)
-    games = live_games.fetch_scoreboard()
+    games = live_games.fetch_scoreboard(date)
     out = []
     for g in games:
         home = teams.get(g["home_team_key"])
