@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { apiFetch } from "@/lib/api";
+import BasketballLoader from "@/components/BasketballLoader";
 import type { DraftPick, DraftResponse } from "@/lib/types";
 
 function PickRow({ pick }: { pick: DraftPick }) {
@@ -54,7 +55,7 @@ export default function DraftPage() {
   }, []);
 
   if (error) return <p className="text-sm text-critical">{error}</p>;
-  if (!draft) return <p className="text-sm text-ink-secondary">Loading…</p>;
+  if (!draft) return <BasketballLoader label="Loading…" />;
 
   const round1 = draft.picks.filter((p) => p.round === 1);
   const round2 = draft.picks.filter((p) => p.round === 2);

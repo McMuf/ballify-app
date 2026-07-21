@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { apiFetch } from "@/lib/api";
+import BasketballLoader from "@/components/BasketballLoader";
 import type { TeamSummary } from "@/lib/types";
 
 function pctColor(pct: number) {
@@ -67,7 +68,7 @@ export default function TeamsPage() {
   }, []);
 
   if (error) return <p className="text-sm text-critical">{error}</p>;
-  if (!teams) return <p className="text-sm text-ink-secondary">Loading teams…</p>;
+  if (!teams) return <BasketballLoader label="Loading teams…" />;
 
   const east = teams.filter((t) => t.conference === "East");
   const west = teams.filter((t) => t.conference === "West");

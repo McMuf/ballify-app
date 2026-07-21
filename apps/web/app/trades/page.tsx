@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { apiFetch } from "@/lib/api";
+import BasketballLoader from "@/components/BasketballLoader";
 import type { TradeRumor } from "@/lib/types";
 
 function timeAgo(iso: string): string {
@@ -32,7 +33,7 @@ export default function TradesPage() {
       </div>
 
       {error && <p className="text-sm text-critical">{error}</p>}
-      {!error && !rumors && <p className="text-sm text-ink-secondary">Loading…</p>}
+      {!error && !rumors && <BasketballLoader label="Loading…" />}
       {rumors && rumors.length === 0 && (
         <p className="text-sm text-ink-muted">No trades in the feed yet.</p>
       )}

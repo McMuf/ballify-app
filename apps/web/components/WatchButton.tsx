@@ -42,8 +42,8 @@ export default function WatchButton({
       onClick={toggle}
       className={
         entry
-          ? "border border-accent px-3 py-1.5 text-xs font-medium text-accent"
-          : "border border-hairline px-3 py-1.5 text-xs font-medium text-ink-secondary hover:border-accent hover:text-accent"
+          ? "border border-accent px-3 py-1.5 text-xs font-medium text-accent transition-transform hover:scale-105"
+          : "border border-hairline px-3 py-1.5 text-xs font-medium text-ink-secondary transition-all hover:scale-105 hover:border-accent hover:text-accent"
       }
     >
       {entry ? "✓ Watching" : "+ Watch"}

@@ -5,6 +5,7 @@ import { apiFetch } from "@/lib/api";
 import StatTrendChart from "@/components/StatTrendChart";
 import SentimentGauge from "@/components/SentimentGauge";
 import WatchButton from "@/components/WatchButton";
+import BasketballLoader from "@/components/BasketballLoader";
 import type { PlayerDetail, SentimentGaugeData, TrendStat } from "@/lib/types";
 import { TREND_STATS } from "@/lib/types";
 
@@ -38,7 +39,7 @@ export default function PlayerDetailClient({ playerId }: { playerId: number }) {
   }, [playerId]);
 
   if (error) return <p className="text-sm text-critical">{error}</p>;
-  if (!player) return <p className="text-sm text-ink-secondary">Loading…</p>;
+  if (!player) return <BasketballLoader label="Loading…" />;
 
   return (
     <div className="flex flex-col gap-6">

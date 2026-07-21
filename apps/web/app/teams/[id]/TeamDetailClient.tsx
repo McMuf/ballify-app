@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { apiFetch } from "@/lib/api";
 import SentimentGauge from "@/components/SentimentGauge";
 import WatchButton from "@/components/WatchButton";
+import BasketballLoader from "@/components/BasketballLoader";
 import type { GameSummary, SentimentGaugeData, TeamDetail } from "@/lib/types";
 
 function StatTile({ label, value }: { label: string; value: string }) {
@@ -38,7 +39,7 @@ export default function TeamDetailClient({ teamId }: { teamId: number }) {
   }, [teamId]);
 
   if (error) return <p className="text-sm text-critical">{error}</p>;
-  if (!team) return <p className="text-sm text-ink-secondary">Loading…</p>;
+  if (!team) return <BasketballLoader label="Loading…" />;
 
   const s = team.standings;
   const pctColor = s.win_pct >= 0.5 ? "text-good-text" : "text-critical";
@@ -75,7 +76,7 @@ export default function TeamDetailClient({ teamId }: { teamId: number }) {
       {todaysGame && (
         <Link
           href={`/games/${todaysGame.id}`}
-          className="flex items-center justify-between border border-hairline p-4 transition-colors hover:border-accent"
+          className="flex items-center justify-between border border-hairline p-4 transition-all hover:scale-[1.01] hover:border-accent"
         >
           <div>
             <p className="text-xs uppercase tracking-wide text-ink-muted">

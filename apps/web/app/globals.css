@@ -16,13 +16,15 @@
   --color-serious: #ec835a;
   --color-critical: #d03b3b;
 
-  --color-accent: #2a78d6;
+  --color-accent: #e2600d;
   --color-accent-aqua: #1baf7a;
   --color-accent-yellow: #eda100;
   --color-accent-green: #008300;
   --color-accent-violet: #4a3aa7;
   --color-accent-magenta: #e87ba4;
-  --color-accent-orange: #eb6834;
+  --color-accent-orange: #d6410f;
+  --color-court: #c98a4b;
+  --color-seam: #1b1b1b;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -42,13 +44,15 @@
     --color-serious: #ec835a;
     --color-critical: #e66767;
 
-    --color-accent: #3987e5;
+    --color-accent: #f0813a;
     --color-accent-aqua: #199e70;
     --color-accent-yellow: #c98500;
     --color-accent-green: #008300;
     --color-accent-violet: #9085e9;
     --color-accent-magenta: #d55181;
-    --color-accent-orange: #d95926;
+    --color-accent-orange: #e85a2a;
+    --color-court: #a86f38;
+    --color-seam: #ececec;
   }
 }
 
@@ -73,6 +77,8 @@
   --color-accent-violet: var(--color-accent-violet);
   --color-accent-magenta: var(--color-accent-magenta);
   --color-accent-orange: var(--color-accent-orange);
+  --color-court: var(--color-court);
+  --color-seam: var(--color-seam);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -85,4 +91,35 @@ body {
 
 .tabular-nums {
   font-variant-numeric: tabular-nums;
+}
+
+@keyframes bball-bounce {
+  0% { transform: translateY(0) scale(1, 1); }
+  20% { transform: translateY(0) scale(1.08, 0.9); }
+  45% { transform: translateY(-32px) scale(0.96, 1.04); }
+  55% { transform: translateY(-32px) scale(0.96, 1.04); }
+  80% { transform: translateY(0) scale(1.08, 0.9); }
+  100% { transform: translateY(0) scale(1, 1); }
+}
+
+@keyframes bball-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes bball-shadow {
+  0%, 100% { transform: scaleX(1); opacity: 0.35; }
+  50% { transform: scaleX(0.6); opacity: 0.15; }
+}
+
+.animate-bball-bounce {
+  animation: bball-bounce 1s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+
+.animate-bball-spin {
+  animation: bball-spin 1.6s linear infinite;
+}
+
+.animate-bball-shadow {
+  animation: bball-shadow 1s cubic-bezier(0.45, 0, 0.55, 1) infinite;
 }

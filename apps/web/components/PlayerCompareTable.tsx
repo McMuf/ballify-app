@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { apiFetch } from "@/lib/api";
+import BasketballLoader from "@/components/BasketballLoader";
 import type { PlayerDetail } from "@/lib/types";
 
 const ROWS: { key: string; label: string; format?: (v: number) => string }[] = [
@@ -31,7 +32,7 @@ export default function PlayerCompareTable({ playerIds }: { playerIds: number[] 
     };
   }, [playerIds]);
 
-  if (!players) return <p className="text-sm text-ink-secondary">Loading comparison…</p>;
+  if (!players) return <BasketballLoader label="Loading comparison…" />;
 
   return (
     <div className="overflow-x-auto border border-hairline">

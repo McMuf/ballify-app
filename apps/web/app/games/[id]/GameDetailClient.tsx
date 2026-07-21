@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { API_BASE, apiFetch } from "@/lib/api";
 import WinProbChart from "@/components/WinProbChart";
+import BasketballLoader from "@/components/BasketballLoader";
 import type { GameDetail, WinProbPoint } from "@/lib/types";
 
 type Meta = { state: string; sentiment_home_share: number | null; replay: boolean };
@@ -55,7 +56,7 @@ export default function GameDetailClient({ gameId }: { gameId: string }) {
   }, [gameId]);
 
   if (error) return <p className="text-sm text-critical">{error}</p>;
-  if (!detail) return <p className="text-sm text-ink-secondary">Loading…</p>;
+  if (!detail) return <BasketballLoader label="Loading…" />;
 
   const latest = points.length > 0 ? points[points.length - 1] : null;
   const homeScore = latest?.home_score ?? detail.state.home_score;
@@ -101,7 +102,7 @@ export default function GameDetailClient({ gameId }: { gameId: string }) {
           Blue line is ESPN&apos;s play-by-play win-probability model. The violet reference line is a
           crowd-sentiment estimate from recent news/Reddit activity. fan mood, not a prediction, and it
           doesn&apos;t update play-by-play.
-          {detail.odds_home_share !== null && " The orange line is the sportsbook-market-implied probability."}
+          {detail.odds_home_share !== null && " The yellow line is the sportsbook-market-implied probability."}
         </p>
       </div>
     </div>

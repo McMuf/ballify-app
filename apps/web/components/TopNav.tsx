@@ -21,7 +21,11 @@ export default function TopNav() {
   return (
     <header className="sticky top-0 z-10 border-b border-hairline bg-surface">
       <div className="mx-auto flex max-w-6xl items-center gap-8 px-6 py-3">
-        <Link href="/" className="text-lg font-semibold tracking-tight text-ink">
+        <Link
+          href="/"
+          className="flex items-center gap-1.5 text-lg font-semibold tracking-tight text-ink transition-colors hover:text-accent"
+        >
+          <span aria-hidden>🏀</span>
           Ballify
         </Link>
         <nav className="flex flex-1 items-center gap-6 text-sm">
@@ -33,8 +37,8 @@ export default function TopNav() {
                 href={item.href}
                 className={
                   active
-                    ? "font-medium text-accent"
-                    : "text-ink-secondary transition-colors hover:text-ink"
+                    ? "border-b-2 border-accent pb-1 font-medium text-accent"
+                    : "border-b-2 border-transparent pb-1 text-ink-secondary transition-colors hover:border-accent hover:text-accent"
                 }
               >
                 {item.label}

@@ -86,12 +86,12 @@ export default function WinProbChart({
         {oddsHomeShare !== null && (
           <ReferenceLine
             y={oddsHomeShare}
-            stroke="var(--color-accent-orange)"
+            stroke="var(--color-accent-yellow)"
             strokeDasharray="4 4"
             label={{
               value: `Market ${pct(oddsHomeShare)}`,
               position: "insideTopRight",
-              fill: "var(--color-accent-orange)",
+              fill: "var(--color-accent-yellow)",
               fontSize: 11,
             }}
           />

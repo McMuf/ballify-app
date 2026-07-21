@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { apiFetch } from "@/lib/api";
+import BasketballLoader from "@/components/BasketballLoader";
 import type { GameDetail, GameSummary, MarketGame } from "@/lib/types";
 
 const REFRESH_INTERVAL_MS = 30_000;
@@ -91,7 +92,7 @@ function GameCard({ game }: { game: MarketGame }) {
   return (
     <Link
       href={`/games/${game.id}`}
-      className="border border-hairline p-4 transition-colors hover:border-accent"
+      className="block border border-hairline p-4 transition-all hover:scale-[1.02] hover:border-accent"
     >
       <div className="flex items-center justify-between">
         <p className="text-xs uppercase tracking-wide text-ink-muted">{game.status_detail}</p>
@@ -195,7 +196,7 @@ export default function MarketsPage() {
       </div>
 
       {error && <p className="text-sm text-critical">{error}</p>}
-      {!error && !games && <p className="text-sm text-ink-secondary">Loading…</p>}
+      {!error && !games && <BasketballLoader label="Loading…" />}
       {games && games.length === 0 && (
         <p className="text-sm text-ink-muted">No games on this day.</p>
       )}

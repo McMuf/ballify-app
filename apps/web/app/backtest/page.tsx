@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { apiFetch } from "@/lib/api";
 import AccuracyChart from "@/components/AccuracyChart";
+import BasketballLoader from "@/components/BasketballLoader";
 import type { BacktestSummary } from "@/lib/types";
 
 function StatTile({ label, value }: { label: string; value: string }) {
@@ -25,7 +26,7 @@ export default function BacktestPage() {
   }, []);
 
   if (error) return <p className="text-sm text-critical">{error}</p>;
-  if (!data) return <p className="text-sm text-ink-secondary">Loading…</p>;
+  if (!data) return <BasketballLoader label="Loading…" />;
 
   return (
     <div className="flex flex-col gap-6">

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { apiFetch } from "@/lib/api";
+import BasketballLoader from "@/components/BasketballLoader";
 import type { InjuryReportRow } from "@/lib/types";
 
 const STATUS_COLORS: Record<string, string> = {
@@ -43,7 +44,7 @@ export default function InjuriesPage() {
       </div>
 
       {error && <p className="text-sm text-critical">{error}</p>}
-      {!error && !rows && <p className="text-sm text-ink-secondary">Loading…</p>}
+      {!error && !rows && <BasketballLoader label="Loading…" />}
       {rows && rows.length === 0 && <p className="text-sm text-ink-muted">No injuries currently tracked.</p>}
 
       {rows && rows.length > 0 && (
