@@ -32,7 +32,7 @@ export default function BacktestPage() {
       <div>
         <h1 className="text-2xl font-semibold text-ink">Backtesting</h1>
         <p className="mt-1 text-sm text-ink-secondary">
-          How often the team with the more bullish sentiment actually won — this is what earns trust in the
+          How often the team with the more bullish sentiment actually won. this is what earns trust in the
           signal, or shows where it falls short.
         </p>
       </div>
@@ -46,7 +46,7 @@ export default function BacktestPage() {
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
             <StatTile
               label="Overall accuracy"
-              value={data.overall_accuracy !== null ? `${(data.overall_accuracy * 100).toFixed(1)}%` : "—"}
+              value={data.overall_accuracy !== null ? `${(data.overall_accuracy * 100).toFixed(1)}%` : "-"}
             />
             <StatTile label="Games backtested" value={data.total_games.toString()} />
             <StatTile label="Real results" value={data.real_count.toString()} />
@@ -57,7 +57,7 @@ export default function BacktestPage() {
             <p className="rounded-md border border-hairline bg-page px-3 py-2 text-xs text-ink-muted">
               {data.real_count === 0
                 ? "All results below are demo-seeded: a synthetic sentiment pick against real historical game outcomes, since there's no accumulated real sentiment history yet. Real results (unlabeled) take over as the app runs."
-                : "Mix of demo-seeded and real results — demo rows are labeled below."}
+                : "Mix of demo-seeded and real results. demo rows are labeled below."}
             </p>
           )}
 

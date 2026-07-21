@@ -9,7 +9,7 @@ from app.services.stats_calc import efficiency, true_shooting_pct
 
 
 def ensure_game_logs(db: Session, player: Player) -> list[GameLog]:
-    """Cached on first fetch per player, per the current season — shared by
+    """Cached on first fetch per player, per the current season. shared by
     the player ticker page and the watchlist's big-stat-night alert check."""
     existing = (
         db.execute(select(GameLog).where(GameLog.player_id == player.id).order_by(GameLog.game_date))

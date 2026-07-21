@@ -37,7 +37,7 @@ function PickRow({ pick }: { pick: DraftPick }) {
           {pick.team.abbreviation}
         </Link>
       ) : (
-        <span className="shrink-0 text-xs text-ink-muted">—</span>
+        <span className="shrink-0 text-xs text-ink-muted">-</span>
       )}
     </div>
   );
@@ -64,7 +64,7 @@ export default function DraftPage() {
       <div>
         <h1 className="text-2xl font-semibold text-ink">Draft</h1>
         <p className="mt-1 text-sm text-ink-secondary">
-          The {draft.year} class, presented like new listings — {draft.status.toLowerCase()}.
+          The {draft.year} class, presented like new listings. {draft.status}.
         </p>
       </div>
 

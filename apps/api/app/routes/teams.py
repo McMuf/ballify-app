@@ -10,7 +10,7 @@ router = APIRouter()
 
 
 def _playoff_odds_estimate(playoff_rank: int) -> float:
-    """Simple rank-based heuristic, not a simulation — labeled as an estimate."""
+    """Simple rank-based heuristic, not a simulation. labeled as an estimate."""
     if playoff_rank <= 6:
         return 0.95
     if playoff_rank <= 8:

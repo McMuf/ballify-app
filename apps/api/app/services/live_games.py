@@ -48,7 +48,7 @@ def fetch_game_summary(event_id: str) -> dict:
 
 def build_win_prob_timeline(summary: dict) -> list[dict]:
     """ESPN's summary endpoint carries its own trained win-probability model,
-    one point per play — real, well-calibrated data rather than a hand-rolled
+    one point per play, real well-calibrated data rather than a hand-rolled
     formula. We just join it back to the play (for score/clock/period)."""
     plays_by_id = {p["id"]: p for p in summary.get("plays", [])}
     timeline = []
@@ -71,7 +71,7 @@ def build_win_prob_timeline(summary: dict) -> list[dict]:
 
 def game_state(status: dict, competitors: list) -> dict:
     """Takes the `status` and `competitors` sub-dicts directly rather than a
-    whole event/header object — the scoreboard endpoint nests status at the
+    whole event/header object. the scoreboard endpoint nests status at the
     event's top level while the summary endpoint nests it one level deeper
     under competitions[0], so callers extract the right one and pass it in."""
     home = next(c for c in competitors if c["homeAway"] == "home")

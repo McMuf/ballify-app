@@ -24,7 +24,7 @@ export default function SentimentGauge({ gauge, title }: { gauge: Gauge; title: 
       <div className="rounded-lg border border-hairline bg-surface p-4">
         <h3 className="text-sm font-medium uppercase tracking-wide text-ink-muted">{title}</h3>
         <p className="mt-2 text-sm text-ink-muted">
-          No sentiment data yet — nothing matched in the last 72 hours of ESPN/Reddit activity.
+          No sentiment data yet. Nothing matched in the last 72 hours of ESPN/Reddit activity.
         </p>
       </div>
     );

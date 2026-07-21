@@ -2,7 +2,7 @@
 
 There's no accumulated real sentiment history on day one of this app, so
 the backtest page would otherwise start empty. This seeds `is_demo_seed=True`
-rows — a synthetic-but-plausible "sentiment favorite" (correct ~62% of the
+rows, a synthetic-but-plausible "sentiment favorite" (correct ~62% of the
 time, a believable-but-imperfect signal) paired with real final scores from
 ESPN's scoreboard across the back half of the season. Clearly distinguished
 from real accumulated results (is_demo_seed=False) everywhere it's surfaced.

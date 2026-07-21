@@ -11,7 +11,7 @@ def true_shooting_pct(pts: float, fga: float, fta: float) -> float:
 def efficiency(pts: float, reb: float, ast: float, stl: float, blk: float, fgm: float,
                 fga: float, ftm: float, fta: float, tov: float) -> float:
     """NBA's own box-score 'EFF' stat (not full PER, which needs league-wide pace
-    normalization) — simple, precedented, and honestly labeled as EFF in the UI."""
+    normalization), simple, precedented, and honestly labeled as EFF in the UI."""
     return round(
         (pts + reb + ast + stl + blk) - (fga - fgm) - (fta - ftm) - tov,
         1,

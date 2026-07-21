@@ -12,7 +12,7 @@ def check_recent_games(db: Session, days_back: int = 3) -> int:
     """Real (non-demo) backtesting: for newly-completed games, compare
     whichever team had the higher sentiment gauge as of game day against
     the actual winner. Only meaningful once real sentiment history has
-    accumulated for both teams — silently skips games where it hasn't."""
+    accumulated for both teams, silently skips games where it hasn't."""
     teams = {team_key(t.name): t for t in db.execute(select(Team)).scalars().all()}
     existing_ids = set(db.execute(select(BacktestResult.game_id)).scalars().all())
 

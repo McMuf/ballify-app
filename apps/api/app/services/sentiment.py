@@ -18,7 +18,7 @@ def score_text(text: str) -> float:
 
 def _existing_keys(db: Session, source: str, since: datetime) -> set[tuple[str, int, datetime]]:
     """(subject_type, subject_id, captured_at) triples already stored for this
-    source — re-running a refresh on an RSS/subreddit feed that hasn't moved
+    source, re-running a refresh on an RSS/subreddit feed that hasn't moved
     should not re-insert (and silently inflate mention volume for) the same
     article/post every time."""
     rows = db.execute(
@@ -126,7 +126,7 @@ def gauge_for(
     db: Session, subject_type: str, subject_id: int, window_hours: int = 72, asof: datetime | None = None
 ) -> dict:
     """asof lets backtesting ask 'what did sentiment look like as of this
-    past date' instead of always reading current sentiment — using today's
+    past date' instead of always reading current sentiment. using today's
     sentiment to grade a days-old game would be hindsight bias."""
     asof = asof or datetime.utcnow()
     cutoff = asof - timedelta(hours=window_hours)

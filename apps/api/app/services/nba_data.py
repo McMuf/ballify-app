@@ -83,7 +83,7 @@ def fetch_player_game_log(player_id: int, season: str | None = None) -> list[dic
 
 def fetch_player_career_row(player_id: int, season: str | None = None) -> dict | None:
     """Current-season per-game averages via the lightweight career-stats
-    endpoint — used where a full game log isn't otherwise needed (e.g.
+    endpoint, used where a full game log isn't otherwise needed (e.g.
     injury impact estimates for players whose ticker page nobody has
     opened yet)."""
     season = season or current_season()
@@ -117,7 +117,7 @@ def fetch_league_standings(season: str | None = None) -> list[dict]:
 _league_stats_cache: dict[str, tuple[datetime, list[dict]]] = {}
 _LEAGUE_STATS_TTL = timedelta(minutes=10)
 
-# leaguedashplayerstats needs this exact full parameter set — a partial set
+# leaguedashplayerstats needs this exact full parameter set. a partial set
 # (e.g. just Season/SeasonType/PerMode) 500s server-side. Captured from
 # nba_api's own endpoint defaults (LeagueDashPlayerStats(get_request=False)).
 _LEAGUE_STATS_BASE_PARAMS = {
@@ -133,7 +133,7 @@ _LEAGUE_STATS_BASE_PARAMS = {
 
 
 def fetch_league_player_stats(season: str | None = None) -> list[dict]:
-    """Per-game averages for every active player in one call — the basis for
+    """Per-game averages for every active player in one call, the basis for
     the screener. Fetching this per-player (500+ live calls) would be far
     too slow; this endpoint gives the whole league in a single request."""
     season = season or current_season()

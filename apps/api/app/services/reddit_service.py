@@ -33,7 +33,7 @@ def get_client() -> praw.Reddit | None:
 
 
 def fetch_recent_posts(subreddit_name: str, limit: int = 15) -> list[dict]:
-    """Returns [] whenever Reddit isn't configured or the call fails — sentiment
+    """Returns [] whenever Reddit isn't configured or the call fails. sentiment
     refresh should never crash the app over a flaky/unauthenticated source."""
     client = get_client()
     if client is None:

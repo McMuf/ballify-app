@@ -19,7 +19,7 @@ STATUS_MAP = {
 }
 
 # How much of a player's scoring load is "lost" for the estimate, by
-# severity. Deliberately blunt (not a real injury-substitution model) —
+# severity. Deliberately blunt (not a real injury-substitution model),
 # dampened by the 25-point scale factor below so a star being ruled out
 # lands in a believable single-digit percentage-point range rather than
 # implying points lost equals win-probability points lost 1:1.
@@ -111,7 +111,7 @@ def refresh_injuries(db: Session) -> int:
         touched_player_ids.add(player.id)
         count += 1
 
-    # Players who recovered since the last refresh drop out of ESPN's feed —
+    # Players who recovered since the last refresh drop out of ESPN's feed,
     # clear their stale row so the report reflects who's hurt *now*. Only do
     # this when the feed actually returned something, so a transient
     # matching failure can't wipe the whole report to empty.

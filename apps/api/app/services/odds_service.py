@@ -13,7 +13,7 @@ ODDS_API_URL = "https://api.the-odds-api.com/v4/sports/basketball_nba/odds"
 
 
 def fetch_odds_events() -> list[dict]:
-    """[] when unconfigured — same graceful-degrade pattern as Reddit."""
+    """[] when unconfigured, same graceful-degrade pattern as Reddit."""
     settings = get_settings()
     if not settings.odds_configured:
         return []
@@ -54,7 +54,7 @@ def parse_event_odds(event: dict) -> dict | None:
             if total <= 0:
                 continue
             # de-vig: raw implied probabilities sum to >1 (the sportsbook's
-            # margin) — normalize so home+away read as a fair probability
+            # margin), normalize so home+away read as a fair probability
             home_probs.append(home_raw / total)
             away_probs.append(away_raw / total)
 
@@ -82,7 +82,7 @@ def match_team(full_name: str, teams: list[Team]) -> Team | None:
 
 
 def refresh_odds(db: Session) -> int:
-    """Odds API events carry their own ids, unrelated to ESPN's — so events
+    """Odds API events carry their own ids, unrelated to ESPN's, so events
     are matched back to a live/upcoming ESPN game by team pair (today's
     scoreboard is the only game set close enough in time for this to be
     unambiguous) rather than by any shared id."""

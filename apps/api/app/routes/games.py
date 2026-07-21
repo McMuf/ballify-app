@@ -24,7 +24,7 @@ def _team_by_key(db: Session) -> dict[str, Team]:
     # keyed by nickname, not abbreviation or city: ESPN's scoreboard/summary
     # endpoints use short-form abbreviations ("SA", "NY") and inconsistent
     # city names ("LA" vs "Los Angeles") that don't match nba.com's stats
-    # API — the nickname alone is unique league-wide and stable across both.
+    # API. the nickname alone is unique league-wide and stable across both.
     return {team_key(t.name): t for t in db.execute(select(Team)).scalars().all()}
 
 

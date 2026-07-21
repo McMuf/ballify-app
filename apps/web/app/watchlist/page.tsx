@@ -144,7 +144,7 @@ export default function WatchlistPage() {
         </div>
         {alerts && alerts.length === 0 && (
           <p className="text-sm text-ink-muted">
-            No alerts yet — they show up here once a watched player has a standout game or a team/player&apos;s
+            No alerts yet. They show up here once a watched player has a standout game or a team/player&apos;s
             sentiment swings.
           </p>
         )}
@@ -157,7 +157,7 @@ export default function WatchlistPage() {
               }`}
             >
               <span>
-                <span className="font-medium">{a.subject_name}</span> — {a.message}
+                <span className="font-medium">{a.subject_name}</span>: {a.message}
               </span>
               <span className="text-xs text-ink-muted">{timeAgo(a.triggered_at)}</span>
             </div>
@@ -167,7 +167,7 @@ export default function WatchlistPage() {
 
       <div className="flex flex-col gap-3">
         {items && items.length === 0 && (
-          <p className="text-sm text-ink-muted">Nothing on your watchlist yet — search above to add one.</p>
+          <p className="text-sm text-ink-muted">Nothing on your watchlist yet. Search above to add one.</p>
         )}
         {items?.map((item) => (
           <div

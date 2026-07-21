@@ -9,7 +9,7 @@ import type { ScreenerPlayer } from "@/lib/types";
 type SentimentFilter = "any" | "bullish" | "bearish";
 
 function sentimentBadge(score: number | null) {
-  if (score === null) return <span className="text-ink-muted">—</span>;
+  if (score === null) return <span className="text-ink-muted">-</span>;
   const color = score >= 0.1 ? "text-good-text" : score <= -0.1 ? "text-critical" : "text-ink-secondary";
   return <span className={`tabular-nums ${color}`}>{score.toFixed(2)}</span>;
 }

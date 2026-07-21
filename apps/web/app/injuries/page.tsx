@@ -37,7 +37,7 @@ export default function InjuriesPage() {
       <div>
         <h1 className="text-2xl font-semibold text-ink">Injuries</h1>
         <p className="mt-1 text-sm text-ink-secondary">
-          Win-probability impact is a modeled estimate from scoring load and severity — not a
+          Win-probability impact is a modeled estimate from scoring load and severity, not a
           real substitution model.
         </p>
       </div>

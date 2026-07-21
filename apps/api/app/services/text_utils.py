@@ -26,7 +26,7 @@ def team_key(name: str) -> str:
     """Match key for teams across data sources with inconsistent abbreviation
     AND city naming (nba.com's stats API says 'SAS'/'NYK', ESPN's scoreboard
     says 'SA'/'NY'; ESPN's draft endpoint says city 'LA' for the Clippers
-    where its own scoreboard endpoint says 'Los Angeles') — nba nicknames
+    where its own scoreboard endpoint says 'Los Angeles'), nba nicknames
     are unique league-wide with no collisions, so the nickname alone is a
     stable key where combining it with a city is not."""
     return fold(name)

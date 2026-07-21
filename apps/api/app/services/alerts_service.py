@@ -8,7 +8,7 @@ from app.services.game_logs import ensure_game_logs
 
 # A game clears the bar if it's a big scoring night relative to the player's
 # own season, or a rare cross-category outburst (double/triple-double style
-# thresholds) — either is genuinely "watchlist-worthy," not just noise.
+# thresholds), either is genuinely "watchlist-worthy," not just noise.
 BIG_NIGHT_PTS_FLOOR = 30
 BIG_NIGHT_MULTIPLIER = 1.5
 BIG_NIGHT_CATEGORY_THRESHOLD = 15

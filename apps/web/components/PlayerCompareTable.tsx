@@ -21,7 +21,7 @@ export default function PlayerCompareTable({ playerIds }: { playerIds: number[] 
   useEffect(() => {
     let stale = false;
     Promise.all(playerIds.map((id) => apiFetch<PlayerDetail>(`/players/${id}`))).then((result) => {
-      // ignore responses from a selection that's since changed — without this,
+      // ignore responses from a selection that's since changed, without this,
       // a faster later request racing a slower earlier one could leave the
       // table showing a stale player set that doesn't match the checkboxes
       if (!stale) setPlayers(result);

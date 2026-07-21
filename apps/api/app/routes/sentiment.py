@@ -19,7 +19,7 @@ def team_sentiment(team_id: int, db: Session = Depends(get_db)):
 
 @router.post("/sentiment/refresh")
 def refresh_sentiment(db: Session = Depends(get_db)):
-    """Manual trigger — the scheduler also runs this on an interval."""
+    """Manual trigger. the scheduler also runs this on an interval."""
     news_count = sentiment.refresh_news_sentiment(db)
     reddit_count = sentiment.refresh_reddit_sentiment(db)
     return {"news_snapshots": news_count, "reddit_snapshots": reddit_count}

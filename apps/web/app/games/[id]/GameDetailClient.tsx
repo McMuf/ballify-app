@@ -87,7 +87,7 @@ export default function GameDetailClient({ gameId }: { gameId: string }) {
       <div className="rounded-lg border border-hairline bg-surface p-4">
         <div className="mb-2 flex items-center justify-between">
           <h2 className="text-sm font-medium uppercase tracking-wide text-ink-muted">
-            Win probability — {detail.home_team.abbreviation}
+            Win probability: {detail.home_team.abbreviation}
           </h2>
           {!streamDone && <span className="text-xs text-ink-muted">{points.length} plays streamed</span>}
         </div>
@@ -99,7 +99,7 @@ export default function GameDetailClient({ gameId }: { gameId: string }) {
         />
         <p className="mt-2 text-xs text-ink-muted">
           Blue line is ESPN&apos;s play-by-play win-probability model. The violet reference line is a
-          crowd-sentiment estimate from recent news/Reddit activity — fan mood, not a prediction, and it
+          crowd-sentiment estimate from recent news/Reddit activity. fan mood, not a prediction, and it
           doesn&apos;t update play-by-play.
           {detail.odds_home_share !== null && " The orange line is the sportsbook-market-implied probability."}
         </p>
