@@ -26,7 +26,7 @@ export type TradeRumor = {
   headline: string;
   url: string;
   source_name: string;
-  credibility_tier: 1 | 2 | 3;
+  team_abbr: string;
   players_mentioned: string[];
   teams_mentioned: string[];
   published_at: string;

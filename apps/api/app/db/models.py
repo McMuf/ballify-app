@@ -95,10 +95,10 @@ class TradeRumor(Base):
     __tablename__ = "trade_rumors"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
-    headline: Mapped[str] = mapped_column(String(512))
+    headline: Mapped[str] = mapped_column(String(512))  # ESPN's own transaction description
     url: Mapped[str] = mapped_column(String(512), default="")
     source_name: Mapped[str] = mapped_column(String(128))
-    credibility_tier: Mapped[int] = mapped_column(Integer, default=3)  # 1=insider,2=beat,3=aggregator
+    team_abbr: Mapped[str] = mapped_column(String(8), default="")  # team this entry is logged under
     players_mentioned: Mapped[str] = mapped_column(Text, default="")  # comma-separated names
     teams_mentioned: Mapped[str] = mapped_column(Text, default="")
     published_at: Mapped[datetime] = mapped_column(DateTime, index=True)

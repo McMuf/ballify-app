@@ -22,7 +22,7 @@ def list_trades(limit: int = 50, db: Session = Depends(get_db)):
             "headline": r.headline,
             "url": r.url,
             "source_name": r.source_name,
-            "credibility_tier": r.credibility_tier,
+            "team_abbr": r.team_abbr,
             "players_mentioned": [p for p in r.players_mentioned.split(", ") if p],
             "teams_mentioned": [t for t in r.teams_mentioned.split(", ") if t],
             "published_at": r.published_at.isoformat(),
