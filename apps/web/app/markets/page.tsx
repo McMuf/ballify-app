@@ -24,6 +24,13 @@ function addDays(d: Date, n: number): Date {
   return next;
 }
 
+function toInputDate(d: Date): string {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
+}
+
 function isSameDay(a: Date, b: Date): boolean {
   return toEspnDate(a) === toEspnDate(b);
 }
@@ -146,24 +153,36 @@ export default function MarketsPage() {
         </p>
       </div>
 
-      <div className="flex items-center gap-3">
-        <button
-          onClick={() => setSelectedDate((d) => addDays(d, -1))}
+      <div className="flex flex-wrap items-center gap-3">
+        <input
+          type="date"
+          value={toInputDate(selectedDate)}
           disabled={loading}
-          className="rounded-md border border-hairline px-3 py-1.5 text-sm text-ink-secondary hover:border-accent hover:text-accent disabled:cursor-not-allowed disabled:opacity-50"
-        >
-          ← Prev day
-        </button>
-        <span className="min-w-32 text-center text-sm font-medium text-ink">
-          {formatDisplayDate(selectedDate)}
-        </span>
-        <button
-          onClick={() => setSelectedDate((d) => addDays(d, 1))}
-          disabled={loading}
-          className="rounded-md border border-hairline px-3 py-1.5 text-sm text-ink-secondary hover:border-accent hover:text-accent disabled:cursor-not-allowed disabled:opacity-50"
-        >
-          Next day →
-        </button>
+          onChange={(e) => {
+            const [y, m, d] = e.target.value.split("-").map(Number);
+            if (y && m && d) setSelectedDate(new Date(y, m - 1, d));
+          }}
+          className="[color-scheme:light_dark] rounded-md border border-hairline bg-page px-2 py-1.5 text-sm text-ink focus:border-accent focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+        />
+        <span className="text-sm font-medium text-ink">{formatDisplayDate(selectedDate)}</span>
+        <div className="flex items-center gap-1">
+          <button
+            onClick={() => setSelectedDate((d) => addDays(d, -1))}
+            disabled={loading}
+            aria-label="Previous day"
+            className="rounded-md border border-hairline px-2 py-1.5 text-sm text-ink-secondary hover:border-accent hover:text-accent disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            ←
+          </button>
+          <button
+            onClick={() => setSelectedDate((d) => addDays(d, 1))}
+            disabled={loading}
+            aria-label="Next day"
+            className="rounded-md border border-hairline px-2 py-1.5 text-sm text-ink-secondary hover:border-accent hover:text-accent disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            →
+          </button>
+        </div>
         {!viewingToday && (
           <button
             onClick={() => setSelectedDate(new Date())}

@@ -71,6 +71,11 @@ export type WinProbPoint = {
 
 export type GameTeamRef = { id?: number; abbreviation: string; name: string };
 
+export type MarketGame = GameSummary & {
+  home_win_pct: number | null;
+  win_pct_source: "model" | "odds" | null;
+};
+
 export type GameDetail = {
   id: string;
   state: {
