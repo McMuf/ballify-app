@@ -1,59 +1,34 @@
 # Ballify
 
-NBA players and teams presented like a Yahoo Finance–style market: player "tickers" with stat trend
-charts, sentiment gauges from Reddit/ESPN, trade rumor and injury tracking, live win-probability during
-games, watchlists, a comparison/screener tool, a draft "IPO" section, and a backtesting page for the
-sentiment signal.
+NBA players and teams tracked like a financial market: stat tickers, sentiment gauges, live win probability, and betting-style odds.
 
-## Stack
-- `apps/api`: FastAPI (Python), SQLite via SQLAlchemy, APScheduler for background data refresh.
-- `apps/web`: Next.js (TypeScript, Tailwind).
+## Requirements
+- Python 3.10+
+- Node 18+
 
-## Data sources (all free tier)
-- Stats: [`nba_api`](https://github.com/swar/nba_api) (`stats.nba.com`), no key required.
-- Live scores/injuries: ESPN's public scoreboard/injury JSON endpoints, no key required.
-- News: ESPN public RSS feeds.
-- Trades: ESPN's public transactions log, no key required, filtered for trade-related entries.
-- Sentiment: Reddit (via `praw`), scored locally with VADER. Requires a free Reddit API app.
-- Win probability: ESPN's own trained per-play win-probability model (exposed on their game summary
-  endpoint) + [The Odds API](https://the-odds-api.com/) free tier for market-implied odds.
-- Draft: ESPN's public draft endpoint turned out to have real, complete draft results, so no seed data
-  was needed after all.
-
-X/Twitter sentiment is intentionally excluded from v1 (the API is paid). The gauge runs on Reddit + ESPN
-news sentiment, with X pluggable later.
-
-## Setup
-
-### Backend (`apps/api`)
+## Backend
 ```bash
 cd apps/api
 python3 -m venv venv
 ./venv/bin/pip install -r requirements.txt
-cp .env.example .env   # fill in REDDIT_CLIENT_ID/SECRET and ODDS_API_KEY if you have them
+cp .env.example .env
 ./venv/bin/uvicorn app.main:app --reload --port 8000
 ```
-Runs fine without any secrets filled in, sentiment/odds features just report no data until configured.
+On Windows, use `venv\Scripts\pip` and `venv\Scripts\uvicorn` instead.
 
-### Frontend (`apps/web`)
+Runs fine with no keys set, sentiment/odds just show no data until you add `REDDIT_CLIENT_ID`/`SECRET` and `ODDS_API_KEY` to `.env`.
+
+## Seed the database
+Run once, from `apps/api` with the venv active:
+```bash
+./venv/bin/python -m app.seed.sync_league
+```
+Everything else (sentiment, trades, injuries, odds, backtest results) fills in automatically once the API is running.
+
+## Frontend
 ```bash
 cd apps/web
 npm install
 npm run dev
 ```
 Visit http://localhost:3000. The API is expected at http://localhost:8000.
-
-### Seed / sync scripts (run from `apps/api`, with the venv active)
-```bash
-./venv/bin/python -m app.seed.sync_league          # teams + rosters, run this first
-./venv/bin/python -m app.seed.seed_backtest_demo   # optional: backfills demo backtest history
-                                                    # so the Backtest page isn't empty on day one
-```
-Everything else (sentiment, trades, injuries, odds, real backtest results) fills in automatically via a
-background scheduler once the API is running. See `app/core/scheduler.py` for the refresh intervals, or
-hit the matching `/api/.../refresh` endpoint to trigger one immediately.
-
-## Project status
-All planned stages are built: player tickers, team indices, sentiment gauges, trade rumors, injuries,
-live win-probability with SSE streaming, watchlist/alerts, player comparison/screener, the draft page, odds
-integration, and backtesting. See commit history for how each stage was verified.
